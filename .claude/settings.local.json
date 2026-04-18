@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(vercel --version)",
+      "Bash(npx vercel *)",
+      "Read(//c/Users/Joaryan/**)",
+      "Read(//c/Users/Joaryan/.vercel/**)"
+    ]
+  }
+}
