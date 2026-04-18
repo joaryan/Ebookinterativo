@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pós Mounjaro: Sua Jornada de Transformação</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f0e8;
+  --page-bg: #fffdf7;
+  --text: #2c2416;
+  --text-light: #6b5a3e;
+  --accent: #8b6914;
+  --accent-light: #c4971e;
+  --accent-pale: #f0e6c8;
+  --border: #d9cdb0;
+  --shadow: rgba(100, 75, 20, 0.18);
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: 'Segoe UI', Arial, sans-serif;
+  --font-size: 18px;
+  --radius: 10px;
+}
+
+html { font-size: var(--font-size); }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 70px;
+}
+
+/* ── Progress Bar ── */
+#progress-bar-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--border);
+  z-index: 1000;
+}
+#progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  width: 0%;
+  transition: width 0.45s ease;
+}
+
+/* ── Header ── */
+#header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(245,240,232,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  z-index: 900;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+#header-title {
+  font-family: var(--font-sans);
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+#header-controls { display: flex; align-items: center; gap: 8px; }
+.ctrl-btn {
+  background: var(--accent-pale);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: filter 0.2s;
+}
+.ctrl-btn:hover { filter: brightness(0.9); }
+#page-counter-header {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+#menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+}
+#menu-btn span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ── Sidebar ── */
+#sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1100;
+}
+#sidebar-overlay.open { display: block; }
+#sidebar {
+  position: fixed;
+  top: 0; left: -320px;
+  width: 300px; height: 100%;
+  background: var(--page-bg);
+  border-right: 1px solid var(--border);
+  z-index: 1200;
+  transition: left 0.32s ease;
+  overflow-y: auto;
+  padding: 24px 0 40px;
+  box-shadow: 4px 0 24px var(--shadow);
+}
+#sidebar.open { left: 0; }
+#sidebar-header {
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+#sidebar-header h2 {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#read-count {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+#sidebar ul { list-style: none; }
+#sidebar ul li { border-bottom: 1px solid rgba(217,205,176,0.4); }
+#sidebar ul li button {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+#sidebar ul li button:hover { background: var(--accent-pale); }
+#sidebar ul li button.active { color: var(--accent); font-weight: 700; background: var(--accent-pale); }
+#sidebar ul li button .chapter-num { font-size: 0.66rem; color: var(--text-light); min-width: 20px; }
+#sidebar ul li button .check-icon { margin-left: auto; color: #5a8a3a; font-size: 0.72rem; display: none; }
+#sidebar ul li button.read-done .check-icon { display: inline; }
+
+/* ── Book Wrapper ── */
+#book-wrap {
+  width: 100%;
+  max-width: 720px;
+  padding: 28px 16px 0;
+}
+
+/* ── FLIPBOOK STAGE ── */
+#book-stage {
+  /* perspective no stage para não cortar o 3D */
+  perspective: 1300px;
+  perspective-origin: 50% 38%;
+}
+
+#book-container {
+  position: relative;
+  min-height: 74vh;
+  background: var(--page-bg);
+  border-radius: var(--radius);
+  box-shadow:
+    0 2px 8px var(--shadow),
+    0 12px 40px rgba(100,75,20,0.10),
+    5px 5px 0 var(--border);
+  overflow: hidden;
+}
+
+/* ── Pages ── */
+.page {
+  display: none;
+  width: 100%;
+  padding: 48px 52px 44px;
+  position: relative;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+}
+@media (max-width: 580px) { .page { padding: 30px 22px 32px; } }
+
+.page.active { display: block; }
+
+/* Sombra de virada sobre a página ativa durante o flip */
+#page-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(to right, transparent 30%, rgba(44,22,0,0.22) 60%, transparent);
+}
+
+/* ── Read Badge ── */
+.read-badge {
+  display: none;
+  position: absolute;
+  top: 14px; right: 14px;
+  background: #e8f5e0;
+  border: 1px solid #a3c98a;
+  color: #3a7020;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  z-index: 10;
+}
+.page.marked-read .read-badge { display: inline-block; }
+
+/* ── Cover ── */
+.cover-page.active {
+  display: flex;   /* override block → flex only when active */
+}
+.cover-page {
+  background: linear-gradient(155deg, #3d2b08 0%, #6b4a18 45%, #8b6914 100%);
+  color: #f5ecd0;
+  min-height: 74vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 40px !important;
+}
+.cover-ornament { font-size: 2.8rem; margin-bottom: 22px; opacity: 0.9; }
+.cover-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d4b56a;
+  margin-bottom: 18px;
+}
+.cover-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  color: #fff8e8;
+}
+.cover-subtitle {
+  font-size: 1.02rem;
+  color: #d4b56a;
+  line-height: 1.65;
+  max-width: 380px;
+  margin-bottom: 38px;
+}
+.cover-divider { width: 56px; height: 1px; background: #d4b56a; margin: 0 auto 22px; }
+.cover-author { font-family: var(--font-sans); font-size: 0.8rem; color: #c4a050; letter-spacing: 0.08em; }
+
+/* ── Typography ── */
+.page-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+h1.page-title {
+  font-size: 1.7rem;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.title-rule {
+  width: 46px; height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin: 12px 0 22px;
+}
+p { line-height: 1.85; margin-bottom: 1.1em; color: var(--text); }
+h2.section-heading { font-size: 1.08rem; color: var(--accent); margin: 26px 0 9px; font-style: italic; }
+ul.content-list, ol.content-list { padding-left: 1.4em; margin-bottom: 1.1em; }
+ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em; }
+.highlight-box {
+  background: var(--accent-pale);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 18px;
+  margin: 18px 0;
+  font-style: italic;
+  line-height: 1.75;
+}
+.tip-box {
+  background: #e8f5e0;
+  border: 1px solid #a3c98a;
+  border-radius: 8px;
+  padding: 13px 17px;
+  margin: 14px 0;
+}
+.tip-box strong {
+  color: #3a7020;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
+}
+.tip-box p { margin: 0; font-size: 0.9rem; }
+.warning-box {
+  background: #fff4e0;
+  border: 1px solid #d4941a;
+  border-radius: 8px;
+  padding: 13px 17px;
+  margin: 14px 0;
+}
+.warning-box strong {
+  color: #a06010;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
+}
+.warning-box p { margin: 0; font-size: 0.9rem; }
+.chapter-number-display {
+  font-family: var(--font-sans);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-pale);
+  line-height: 1;
+  margin-bottom: -8px;
+}
+
+/* ── Quiz ── */
+.quiz-section {
+  background: var(--accent-pale);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  margin: 26px 0;
+}
+.quiz-section h3 {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.quiz-question { margin-bottom: 18px; }
+.quiz-question label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 9px;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 7px; }
+.quiz-option {
+  background: var(--page-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.83rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: left;
+}
+.quiz-option:hover { border-color: var(--accent-light); background: #fef9ee; }
+.quiz-option.selected { border-color: var(--accent); background: #fef3d0; color: var(--accent); font-weight: 700; }
+
+/* ── Summary ── */
+.summary-section {
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.summary-section h3 {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 9px;
+}
+.summary-section p { margin: 0; font-size: 0.93rem; }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 28px; margin: 14px 0; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.tl-item { position: relative; margin-bottom: 18px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -24px; top: 5px;
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid var(--page-bg);
+}
+.tl-period {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 3px;
+}
+.tl-desc { font-size: 0.88rem; line-height: 1.7; margin: 0; }
+
+/* ── FAQ ── */
+.faq-item { border-bottom: 1px solid var(--border); padding: 11px 0; cursor: pointer; }
+.faq-q {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.faq-q::after { content: '+'; font-size: 1.2rem; }
+.faq-item.open .faq-q::after { content: '−'; }
+.faq-a { display: none; padding: 9px 0 3px; font-size: 0.88rem; line-height: 1.75; }
+.faq-item.open .faq-a { display: block; }
+
+/* ── Navigation ── */
+#nav-wrap {
+  width: 100%;
+  max-width: 720px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  gap: 12px;
+}
+.nav-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 11px 22px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-btn:hover { background: #6b4e10; transform: translateY(-1px); }
+.nav-btn:disabled { background: var(--border); color: var(--text-light); cursor: not-allowed; transform: none; }
+#btn-home {
+  background: none;
+  border: 1.5px solid var(--border);
+  color: var(--text-light);
+  font-size: 0.76rem;
+  padding: 8px 14px;
+}
+#btn-home:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-pale); }
+#page-info {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  color: var(--text-light);
+  text-align: center;
+  white-space: nowrap;
+}
+#mark-wrap {
+  width: 100%;
+  max-width: 720px;
+  padding: 8px 16px 0;
+  display: flex;
+  justify-content: center;
+}
+.mark-read-btn {
+  background: none;
+  border: 1.5px solid #a3c98a;
+  color: #3a7020;
+  border-radius: var(--radius);
+  padding: 8px 18px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.mark-read-btn:hover { background: #e8f5e0; }
+.mark-read-btn.done { background: #e8f5e0; }
+
+/* Prevent interaction during flip */
+#book-container.flipping { pointer-events: none; }
+
+/* Flash de zona ao clicar na folha */
+@keyframes zoneFlash {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="header">
+  <span id="header-title">Pós Mounjaro</span>
+  <div id="header-controls">
+    <button class="ctrl-btn" onclick="changeFontSize(-2)">A−</button>
+    <button class="ctrl-btn" onclick="changeFontSize(2)">A+</button>
+    <span id="page-counter-header">1 / 15</span>
+    <button id="menu-btn" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</div>
+
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>Capítulos</h2>
+    <div id="read-count">0 / 15 páginas lidas</div>
+  </div>
+  <ul id="chapter-list"></ul>
+</nav>
+
+<div id="book-wrap">
+<div id="book-stage">
+<div id="book-container">
+  <div id="page-sweep"></div>
+
+  <!-- PAGE 1: Capa -->
+  <div class="page cover-page" data-page="1" data-title="Capa">
+    <div class="cover-ornament">🌿</div>
+    <div class="cover-eyebrow">Guia Completo</div>
+    <h1 class="cover-title">Pós Mounjaro:<br>Sua Jornada de<br>Transformação</h1>
+    <p class="cover-subtitle">Tudo o que você precisa saber para viver bem durante e após o tratamento com Mounjaro.</p>
+    <div class="cover-divider"></div>
+    <div class="cover-author">Guia Prático em Português Brasileiro</div>
+  </div>
+
+  <!-- PAGE 2: Sobre este Ebook -->
+  <div class="page" data-page="2" data-title="Sobre este Ebook">
+    <span class="read-badge">✓ Lida</span>
+    <div class="page-eyebrow">Apresentação</div>
+    <h1 class="page-title">Sobre este Ebook</h1>
+    <div class="title-rule"></div>
+    <p>Este ebook foi criado para ser seu companheiro de bolso durante toda a jornada com o Mounjaro. Ele reúne informações práticas, dicas baseadas em evidências e orientações emocionais para que você aproveite ao máximo o seu tratamento.</p>
+    <p>Aqui você encontrará respostas para as dúvidas mais comuns, estratégias para lidar com os desafios do dia a dia e motivação para manter o foco nos seus objetivos.</p>
+    <div class="highlight-box">
+      "A jornada de transformação começa com informação. Conhecer o seu corpo e o que esperar é o primeiro passo para resultados duradouros."
+    </div>
+    <h2 class="section-heading">Como usar este guia</h2>
+    <ul class="content-list">
+      <li>Leia no seu próprio ritmo — cada capítulo é independente.</li>
+      <li>Marque as páginas como lidas para acompanhar seu progresso.</li>
+      <li>Responda as perguntas interativas para receber um resumo personalizado.</li>
+      <li>Ajuste o tamanho da fonte com os botões A− / A+ para maior conforto.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>💡 Importante</strong>
+      <p>Este material tem caráter informativo e não substitui a orientação do seu médico ou nutricionista. Sempre consulte seu profissional de saúde antes de fazer alterações no tratamento.</p>
+    </div>
+  </div>
+
+  <!-- PAGE 3: Introdução -->
+  <div class="page" data-page="3" data-title="Introdução">
+    <span class="read-badge">✓ Lida</span>
+    <div class="page-eyebrow">Introdução</div>
+    <h1 class="page-title">Por Que Este Ebook?</h1>
+    <div class="title-rule"></div>
+    <p>Iniciar o tratamento com Mounjaro é um momento de esperança e, ao mesmo tempo, de muitas perguntas. O que vai mudar no meu corpo? O que posso comer? Como lidar com os efeitos colaterais? Quantos quilos vou perder?</p>
+    <p>A verdade é que cada pessoa tem uma experiência única. Mas existem padrões, dicas e estratégias que funcionam para a maioria das pessoas — e é exatamente isso que você vai encontrar aqui.</p>
+    <p>O Mounjaro (tirzepatida) é uma das medicações mais eficazes disponíveis atualmente para o tratamento da obesidade. Ele age de forma dupla no organismo, simulando dois hormônios naturais — GIP e GLP-1 — que regulam o apetite, a glicemia e o metabolismo.</p>
+    <div class="highlight-box">
+      "O remédio é uma ferramenta poderosa. Mas o que você faz com ele — como se alimenta, como se move, como cuida da sua mente — é o que determina o resultado a longo prazo."
+    </div>
+    <p>Neste ebook, vamos percorrer juntos cada etapa da sua jornada: dos primeiros dias de tratamento à manutenção dos resultados. Prepare-se para se conhecer melhor e construir hábitos que durem para sempre.</p>
+  </div>
+
+  <!-- PAGE 4: Cap 1 -->
+  <div class="page" data-page="4" data-title="Cap. 1 — O Que É o Mounjaro">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">01</div>
+    <div class="page-eyebrow">Capítulo 1</div>
+    <h1 class="page-title">O Que É o Mounjaro e Como Ele Age no Corpo</h1>
+    <div class="title-rule"></div>
+    <p>O Mounjaro é o nome comercial da <strong>tirzepatida</strong>, uma medicação injetável semanal aprovada para o tratamento do diabetes tipo 2 e da obesidade. Diferente de outras medicações similares, a tirzepatida age em dois receptores ao mesmo tempo: o do GLP-1 e o do GIP.</p>
+    <h2 class="section-heading">O que são GLP-1 e GIP?</h2>
+    <p>GLP-1 e GIP são hormônios produzidos naturalmente pelo intestino após as refeições. Eles enviam sinais ao cérebro indicando que você está satisfeito, diminuem a produção de glucagon e retardam o esvaziamento gástrico.</p>
+    <div class="tip-box">
+      <strong>⚙️ Como funciona na prática</strong>
+      <p>Com o Mounjaro, seu cérebro recebe o sinal de saciedade muito mais rapidamente. Você se satisfaz com porções menores e sente menos vontade de beliscar entre as refeições.</p>
+    </div>
+    <h2 class="section-heading">Principais efeitos do Mounjaro</h2>
+    <ul class="content-list">
+      <li><strong>Redução significativa do apetite</strong> — menos fome ao longo do dia.</li>
+      <li><strong>Saciedade prolongada</strong> — as refeições duram mais tempo.</li>
+      <li><strong>Controle da glicemia</strong> — importante para diabéticos e pré-diabéticos.</li>
+      <li><strong>Perda de peso</strong> — estudos mostram redução de 15% a 22% do peso corporal.</li>
+      <li><strong>Melhora de marcadores metabólicos</strong> — colesterol, triglicerídeos e pressão arterial.</li>
+    </ul>
+    <div class="highlight-box">
+      "Entender como o medicamento funciona ajuda você a trabalhar com ele, e não contra ele. Quando a fome diminui, é o Mounjaro agindo — não fraqueza da sua parte."
+    </div>
+  </div>
+
+  <!-- PAGE 5: Cap 2 -->
+  <div class="page" data-page="5" data-title="Cap. 2 — Os Primeiros Dias">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">02</div>
+    <div class="page-eyebrow">Capítulo 2</div>
+    <h1 class="page-title">Os Primeiros Dias: O Que Esperar</h1>
+    <div class="title-rule"></div>
+    <p>Os primeiros dias após a primeira aplicação do Mounjaro costumam ser os mais desafiadores — e também os mais surpreendentes. O corpo está se adaptando a uma nova sinalização hormonal, e isso pode gerar sensações que você nunca experimentou antes.</p>
+    <h2 class="section-heading">O que pode acontecer na primeira semana</h2>
+    <ul class="content-list">
+      <li><strong>Náusea leve a moderada</strong> — o efeito mais comum, especialmente após as primeiras doses.</li>
+      <li><strong>Redução abrupta do apetite</strong> — você pode não sentir fome e precisar se lembrar de comer.</li>
+      <li><strong>Alterações no trânsito intestinal</strong> — constipação ou diarreia são comuns no início.</li>
+      <li><strong>Cansaço</strong> — o corpo gastando energia para se adaptar.</li>
+      <li><strong>Arrotos frequentes</strong> — o esvaziamento gástrico mais lento pode causar isso.</li>
+    </ul>
+    <div class="warning-box">
+      <strong>⚠️ Atenção</strong>
+      <p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Esses sintomas podem indicar necessidade de ajuste na dose.</p>
+    </div>
+    <h2 class="section-heading">Estratégias para os primeiros dias</h2>
+    <ul class="content-list">
+      <li>Faça refeições pequenas e frequentes.</li>
+      <li>Evite alimentos gordurosos e ultraprocessados.</li>
+      <li>Beba água em pequenos goles ao longo do dia.</li>
+      <li>Aplique o Mounjaro em dias em que você puder descansar se necessário.</li>
+      <li>Não pule refeições mesmo sem fome — o corpo precisa de combustível.</li>
+    </ul>
+    <div class="highlight-box">
+      "O desconforto inicial é temporário. A maioria das pessoas reporta que os efeitos colaterais diminuem significativamente após as primeiras semanas."
+    </div>
+  </div>
+
+  <!-- PAGE 6: Cap 3 -->
+  <div class="page" data-page="6" data-title="Cap. 3 — Alimentação">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">03</div>
+    <div class="page-eyebrow">Capítulo 3</div>
+    <h1 class="page-title">Alimentação no Pós-Mounjaro</h1>
+    <div class="title-rule"></div>
+    <p>O Mounjaro reduz o apetite, mas não garante automaticamente uma alimentação saudável. O que você come continua sendo fundamental para que a perda de peso seja feita com qualidade — preservando massa muscular e garantindo todos os nutrientes necessários.</p>
+    <h2 class="section-heading">Priorize proteínas em cada refeição</h2>
+    <p>Com a redução do apetite, há risco de comer menos proteína do que o necessário. Isso pode levar à perda de massa muscular ao invés de gordura. Procure incluir em cada refeição:</p>
+    <ul class="content-list">
+      <li>Frango, peixe, ovos, carne magra</li>
+      <li>Leguminosas: feijão, lentilha, grão-de-bico</li>
+      <li>Laticínios: iogurte grego, queijo cottage, ricota</li>
+      <li>Tofu e tempeh (para quem prefere opções vegetais)</li>
+    </ul>
+    <div class="tip-box">
+      <strong>🥗 Meta de proteína</strong>
+      <p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal para você.</p>
+    </div>
+    <h2 class="section-heading">Alimentos que pioram os efeitos colaterais</h2>
+    <ul class="content-list">
+      <li>Alimentos muito gordurosos (frituras, fast food)</li>
+      <li>Bebidas gaseificadas e alcoólicas</li>
+      <li>Refeições muito volumosas de uma só vez</li>
+      <li>Alimentos com muito açúcar refinado</li>
+    </ul>
+    <div class="highlight-box">
+      "O Mounjaro faz o trabalho de reduzir a fome. Você faz o trabalho de escolher alimentos que nutrem o seu corpo."
+    </div>
+  </div>
+
+  <!-- PAGE 7: Cap 4 -->
+  <div class="page" data-page="7" data-title="Cap. 4 — Hidratação e Suplementação">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">04</div>
+    <div class="page-eyebrow">Capítulo 4</div>
+    <h1 class="page-title">Hidratação e Suplementação</h1>
+    <div class="title-rule"></div>
+    <p>Com o apetite reduzido, muitas pessoas também acabam reduzindo a ingestão de líquidos sem perceber. A hidratação adequada é essencial durante o tratamento — tanto para o bem-estar geral quanto para minimizar efeitos colaterais como constipação e fadiga.</p>
+    <h2 class="section-heading">Meta de hidratação diária</h2>
+    <p>O objetivo é beber entre <strong>2 e 2,5 litros de líquidos por dia</strong>. Prefira água, água com gás com moderação, chás sem açúcar e água de coco.</p>
+    <div class="tip-box">
+      <strong>💧 Dica de hidratação</strong>
+      <p>Leve uma garrafinha de água para todos os lugares. Coloque lembretes no celular para beber água — sem fome, sem sede, é fácil se esquecer dos líquidos também.</p>
+    </div>
+    <h2 class="section-heading">Suplementação mais recomendada</h2>
+    <ul class="content-list">
+      <li><strong>Vitamina B12</strong> — essencial para o sistema nervoso.</li>
+      <li><strong>Vitamina D + Cálcio</strong> — saúde óssea durante a perda de peso.</li>
+      <li><strong>Ferro</strong> — especialmente para mulheres em idade fértil.</li>
+      <li><strong>Magnésio</strong> — pode ajudar com constipação e câimbras.</li>
+      <li><strong>Proteína em pó</strong> — quando difícil atingir a meta por alimentação.</li>
+    </ul>
+    <div class="warning-box">
+      <strong>⚠️ Não suplementar por conta própria</strong>
+      <p>Antes de iniciar qualquer suplementação, peça exames de sangue ao seu médico. Suplementar sem necessidade pode ser prejudicial.</p>
+    </div>
+  </div>
+
+  <!-- PAGE 8: Cap 5 — INTERATIVO -->
+  <div class="page" data-page="8" data-title="Cap. 5 — Efeitos Colaterais ★">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">05</div>
+    <div class="page-eyebrow">Capítulo 5</div>
+    <h1 class="page-title">Efeitos Colaterais: Como Gerenciar</h1>
+    <div class="title-rule"></div>
+    <p>Os efeitos colaterais do Mounjaro são, na maioria das vezes, transitórios. Eles tendem a ser mais intensos nas primeiras semanas e diminuem conforme o corpo se adapta à medicação.</p>
+    <h2 class="section-heading">Náusea — o mais comum</h2>
+    <p>Afeta cerca de 30% dos usuários. Para aliviar: coma devagar, evite alimentos gordurosos, consuma gengibre em chá ou cápsulas, e evite deitar logo após comer.</p>
+    <h2 class="section-heading">Constipação</h2>
+    <p>O esvaziamento gástrico mais lento pode reduzir a frequência das evacuações. Aumente fibras, beba mais água e faça caminhadas leves após as refeições.</p>
+    <div class="tip-box">
+      <strong>🍵 Aliados naturais</strong>
+      <p>Gengibre, hortelã, camomila e erva-cidreira podem ajudar a aliviar desconfortos gastrointestinais de forma segura.</p>
+    </div>
+    <div class="quiz-section">
+      <h3>✏️ Questionário — Capítulo 5</h3>
+      <div class="quiz-question">
+        <label>1. Qual efeito colateral você sentiu mais até agora?</label>
+        <div class="quiz-options" id="q1-options">
+          <button class="quiz-option" onclick="selectOption('q1','nausea',this)">🤢 Náusea</button>
+          <button class="quiz-option" onclick="selectOption('q1','fadiga',this)">😴 Fadiga / cansaço</button>
+          <button class="quiz-option" onclick="selectOption('q1','constipacao',this)">😣 Constipação</button>
+          <button class="quiz-option" onclick="selectOption('q1','nenhum',this)">😊 Nenhum / muito leve</button>
+        </div>
+      </div>
+      <div class="quiz-question">
+        <label>2. Como está seu apetite desde o início do tratamento?</label>
+        <div class="quiz-options" id="q2-options">
+          <button class="quiz-option" onclick="selectOption('q2','muito_reduzido',this)">📉 Muito reduzido — quase não sinto fome</button>
+          <button class="quiz-option" onclick="selectOption('q2','pouco_reduzido',this)">📊 Um pouco reduzido — ainda sinto fome</button>
+          <button class="quiz-option" onclick="selectOption('q2','normal',this)">📈 Praticamente normal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 9: Cap 6 -->
+  <div class="page" data-page="9" data-title="Cap. 6 — Exercícios Físicos">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">06</div>
+    <div class="page-eyebrow">Capítulo 6</div>
+    <h1 class="page-title">Exercícios Físicos Durante o Tratamento</h1>
+    <div class="title-rule"></div>
+    <p>O exercício físico é um dos pilares mais importantes para potencializar os resultados do Mounjaro. Enquanto a medicação reduz o apetite, a atividade física garante que você perca gordura — e não músculo.</p>
+    <h2 class="section-heading">Por que o exercício é tão importante?</h2>
+    <ul class="content-list">
+      <li>Preserva e aumenta a massa muscular durante a perda de peso.</li>
+      <li>Acelera o metabolismo basal.</li>
+      <li>Melhora a sensibilidade à insulina.</li>
+      <li>Reduz ansiedade e melhora o humor.</li>
+      <li>Contribui para a manutenção do peso a longo prazo.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>🏃 Recomendação mínima</strong>
+      <p>150 minutos de atividade moderada por semana (OMS). Isso equivale a 30 minutos de caminhada rápida, 5 dias por semana. Simples e eficaz.</p>
+    </div>
+    <h2 class="section-heading">Qual tipo de exercício é melhor?</h2>
+    <p><strong>Musculação / Treinamento de força</strong> é o mais recomendado durante o uso do Mounjaro, pois é o que mais protege a massa muscular. Combinado com exercício aeróbico, os resultados são ainda melhores.</p>
+    <div class="highlight-box">
+      "Se você nunca se exercitou antes, comece com 10 minutos de caminhada por dia. Consistência bate intensidade. O hábito é mais importante do que a performance."
+    </div>
+  </div>
+
+  <!-- PAGE 10: Cap 7 -->
+  <div class="page" data-page="10" data-title="Cap. 7 — Saúde Mental e Autoestima">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">07</div>
+    <div class="page-eyebrow">Capítulo 7</div>
+    <h1 class="page-title">Saúde Mental e Autoestima</h1>
+    <div class="title-rule"></div>
+    <p>A jornada com o Mounjaro não é apenas física. A relação com o próprio corpo, com a comida e com a autoimagem passa por transformações profundas durante o tratamento.</p>
+    <h2 class="section-heading">A relação com a comida muda</h2>
+    <p>Muitas pessoas descobrem, com a redução do apetite, que usavam a comida como fonte de conforto emocional. Quando o Mounjaro "silencia" a fome física, a fome emocional pode se tornar mais evidente.</p>
+    <div class="highlight-box">
+      "Você não está com fome de comida — você está com fome de algo mais. Identifique o que é: descanso? Conexão? Prazer? E encontre outras formas de nutri-lo."
+    </div>
+    <h2 class="section-heading">Autoestima e corpo em transformação</h2>
+    <ul class="content-list">
+      <li>Celebre cada conquista, por menor que seja.</li>
+      <li>Não se compare com outros — cada corpo responde diferente.</li>
+      <li>Evite pesar-se obsessivamente — o peso varia dia a dia.</li>
+      <li>Busque apoio: amigos, grupos de suporte ou um psicólogo.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>🧠 Considere a terapia</strong>
+      <p>Muitas pessoas no tratamento com GLP-1 se beneficiam de acompanhamento psicológico para trabalhar a relação com a comida e o corpo. Não há fraqueza nisso — há sabedoria.</p>
+    </div>
+  </div>
+
+  <!-- PAGE 11: Cap 8 — INTERATIVO -->
+  <div class="page" data-page="11" data-title="Cap. 8 — Resultados e Linha do Tempo ★">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">08</div>
+    <div class="page-eyebrow">Capítulo 8</div>
+    <h1 class="page-title">Resultados e Linha do Tempo</h1>
+    <div class="title-rule"></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-period">Semanas 1–4</div>
+        <p class="tl-desc">Adaptação ao medicamento. Efeitos colaterais mais comuns. Redução do apetite começa a aparecer. Perda inicial de 1 a 3 kg.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Meses 2–3</div>
+        <p class="tl-desc">O corpo se adapta. Efeitos colaterais diminuem. Perda de peso mais consistente: 0,5 a 1 kg por semana.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Meses 4–6</div>
+        <p class="tl-desc">Resultados visíveis e mensuráveis. Melhora nos exames. Roupas ficam largas. Maioria perde entre 10% e 15% do peso inicial.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">Mês 6 em diante</div>
+        <p class="tl-desc">Fase de consolidação. Ritmo pode desacelerar — isso é normal. Foco em manter os hábitos e preparar a manutenção.</p>
+      </div>
+    </div>
+    <div class="warning-box">
+      <strong>⚠️ Platôs são normais</strong>
+      <p>Toda jornada tem platôs. Isso não significa que você parou de progredir. Confie no processo.</p>
+    </div>
+    <div class="quiz-section">
+      <h3>✏️ Questionário — Capítulo 8</h3>
+      <div class="quiz-question">
+        <label>3. Há quantos meses você está no tratamento?</label>
+        <div class="quiz-options" id="q3-options">
+          <button class="quiz-option" onclick="selectOption('q3','1a2',this)">🌱 1 a 2 meses — fase inicial</button>
+          <button class="quiz-option" onclick="selectOption('q3','3a6',this)">🌿 3 a 6 meses — fase intermediária</button>
+          <button class="quiz-option" onclick="selectOption('q3','mais6',this)">🌳 Mais de 6 meses — fase avançada</button>
+        </div>
+      </div>
+      <div class="quiz-question">
+        <label>4. Qual é o seu principal objetivo?</label>
+        <div class="quiz-options" id="q4-options">
+          <button class="quiz-option" onclick="selectOption('q4','emagrecer',this)">⚖️ Emagrecer e perder gordura</button>
+          <button class="quiz-option" onclick="selectOption('q4','manter',this)">🎯 Manter o peso já conquistado</button>
+          <button class="quiz-option" onclick="selectOption('q4','saude',this)">❤️ Saúde geral e qualidade de vida</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 12: Cap 9 -->
+  <div class="page" data-page="12" data-title="Cap. 9 — Dicas para Potencializar">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">09</div>
+    <div class="page-eyebrow">Capítulo 9</div>
+    <h1 class="page-title">Dicas para Potencializar os Resultados</h1>
+    <div class="title-rule"></div>
+    <h2 class="section-heading">1. Priorize o sono</h2>
+    <p>Dormir mal aumenta o cortisol, que estimula o acúmulo de gordura e dificulta a perda de peso. Tente dormir entre 7 e 9 horas por noite.</p>
+    <h2 class="section-heading">2. Gerencie o estresse</h2>
+    <p>Estresse crônico sabota o emagrecimento. Práticas como meditação, respiração profunda e yoga ajudam a regular o cortisol.</p>
+    <h2 class="section-heading">3. Não pule refeições</h2>
+    <p>Mesmo sem fome, comer de 3 a 4 vezes ao dia mantém o metabolismo ativo e evita episódios de comer demais por excesso de privação.</p>
+    <div class="tip-box">
+      <strong>🌙 Hábito poderoso</strong>
+      <p>Crie uma rotina noturna relaxante: chá de camomila, sem telas 30 min antes de dormir, temperatura ambiente agradável. O sono de qualidade é subestimado.</p>
+    </div>
+    <h2 class="section-heading">4. Registre seu progresso</h2>
+    <p>Tire fotos mensais, anote medidas e registre como você se sente. A balança nem sempre reflete todo o progresso real.</p>
+    <h2 class="section-heading">5. Celebre cada conquista</h2>
+    <ul class="content-list">
+      <li>Subiu um andar de escada sem se cansar? Conquista!</li>
+      <li>Passou uma semana seguindo a alimentação? Conquista!</li>
+      <li>Dormiu 8 horas? Conquista!</li>
+    </ul>
+    <div class="highlight-box">
+      "Pequenas vitórias acumuladas constroem grandes transformações. Não espere o número perfeito na balança para se valorizar."
+    </div>
+  </div>
+
+  <!-- PAGE 13: Cap 10 -->
+  <div class="page" data-page="13" data-title="Cap. 10 — Manutenção a Longo Prazo">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">10</div>
+    <div class="page-eyebrow">Capítulo 10</div>
+    <h1 class="page-title">Manutenção a Longo Prazo</h1>
+    <div class="title-rule"></div>
+    <p>Atingir o peso desejado é uma conquista enorme. Mas o verdadeiro desafio é manter os resultados. A boa notícia é que os hábitos que você construiu durante o tratamento são o seu maior aliado nessa fase.</p>
+    <h2 class="section-heading">O que acontece quando o Mounjaro é suspenso?</h2>
+    <p>Estudos mostram que, sem mudanças de estilo de vida, parte do peso pode retornar após a suspensão do medicamento. O corpo tem memória metabólica e tende a querer retornar ao peso anterior.</p>
+    <div class="highlight-box">
+      "O Mounjaro cria a janela de oportunidade. Os hábitos que você construiu nessa janela são o que mantém os resultados quando ela se fecha."
+    </div>
+    <h2 class="section-heading">Pilares da manutenção</h2>
+    <ul class="content-list">
+      <li><strong>Alimentação consistente</strong> — não precisa ser perfeita, mas precisa ser consistente.</li>
+      <li><strong>Atividade física regular</strong> — especialmente treino de força.</li>
+      <li><strong>Monitoramento leve</strong> — verificar o peso uma vez por semana.</li>
+      <li><strong>Sono e controle do estresse</strong> — continuam sendo fundamentais.</li>
+      <li><strong>Acompanhamento médico</strong> — o médico decidirá sobre redução ou manutenção da dose.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>📅 Regra dos 5 kg</strong>
+      <p>Se o peso aumentar mais de 5 kg do patamar atingido, retorne imediatamente ao seu médico para avaliar o plano de manutenção.</p>
+    </div>
+  </div>
+
+  <!-- PAGE 14: Cap 11 — Pele -->
+  <div class="page" data-page="14" data-title="Cap. 11 — A Saúde da Pele">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">11</div>
+    <div class="page-eyebrow">Capítulo 11</div>
+    <h1 class="page-title">A Saúde da Pele: Flacidez e Colágeno</h1>
+    <div class="title-rule"></div>
+    <p>Uma das maiores preocupações de quem emagrece rapidamente é a flacidez. Com o Mounjaro proporcionando perdas expressivas de peso em pouco tempo, é natural que a pele precise de atenção redobrada para acompanhar essa mudança.</p>
+    <h2 class="section-heading">Por que a flacidez acontece?</h2>
+    <p>A pele é elástica, mas tem limites. Quando acumula gordura por anos e depois perde esse volume rapidamente, ela não consegue se retrair na mesma velocidade. Quanto mais rápida a perda, maior o risco de flacidez — especialmente em braços, abdômen, coxas e pescoço.</p>
+    <div class="tip-box">
+      <strong>💡 Boa notícia</strong>
+      <p>A pele continua se adaptando por meses após a perda de peso. Muitas pessoas veem melhora significativa com o tempo, especialmente quando combinam nutrição adequada, exercícios e cuidados tópicos.</p>
+    </div>
+    <h2 class="section-heading">O que realmente ajuda</h2>
+    <ul class="content-list">
+      <li><strong>Proteína adequada</strong> — o colágeno é uma proteína. Sem aminoácidos suficientes, o corpo não consegue produzir fibras elásticas novas.</li>
+      <li><strong>Colágeno hidrolisado</strong> — suplementação com 10–15g/dia tem evidências de melhora na elasticidade da pele.</li>
+      <li><strong>Vitamina C</strong> — cofator essencial para a síntese de colágeno. Frutas cítricas, pimentão e brócolis são excelentes fontes.</li>
+      <li><strong>Treino de força</strong> — ao aumentar o volume muscular embaixo da pele, cria uma "base" que reduz o aspecto flácido.</li>
+      <li><strong>Hidratação da pele</strong> — cremes com retinol, ácido hialurônico e vitamina E ajudam na textura superficial.</li>
+      <li><strong>Massagem e drenagem linfática</strong> — melhoram a circulação e podem acelerar a retração da pele.</li>
+    </ul>
+    <h2 class="section-heading">O que NÃO funciona</h2>
+    <ul class="content-list">
+      <li>Cremes milagrosos prometendo eliminar flacidez em dias — não existem.</li>
+      <li>Perda de peso ainda mais rápida — piora o problema.</li>
+      <li>Ficar parado esperando — o músculo é o seu melhor aliado.</li>
+    </ul>
+    <div class="highlight-box">
+      "A pele é resiliente. Dê a ela tempo, nutrição e estímulo muscular — ela vai te surpreender."
+    </div>
+  </div>
+
+  <!-- PAGE 15: Cap 12 — Receitas -->
+  <div class="page" data-page="15" data-title="Cap. 12 — Receitas Práticas">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">12</div>
+    <div class="page-eyebrow">Capítulo 12</div>
+    <h1 class="page-title">Receitas Práticas: O Prato Perfeito Pós-Mounjaro</h1>
+    <div class="title-rule"></div>
+    <p>Com o apetite reduzido, cada refeição precisa ser densa em nutrientes. Não é sobre comer menos — é sobre comer melhor. Aqui estão as bases para montar pratos que nutrem sem pesar.</p>
+    <h2 class="section-heading">A fórmula do prato ideal</h2>
+    <div class="tip-box">
+      <strong>🥘 Estrutura de cada refeição</strong>
+      <p><strong>½ prato:</strong> vegetais variados (crus, cozidos ou grelhados)<br>
+      <strong>¼ prato:</strong> proteína (frango, peixe, ovo, leguminosas)<br>
+      <strong>¼ prato:</strong> carboidrato complexo (arroz integral, batata-doce, quinoa)</p>
+    </div>
+    <h2 class="section-heading">Ideias de refeições que funcionam</h2>
+    <ul class="content-list">
+      <li><strong>Café da manhã:</strong> Iogurte grego com frutas vermelhas + 1 colher de whey + granola sem açúcar.</li>
+      <li><strong>Almoço:</strong> Frango grelhado com legumes no vapor + arroz integral + azeite.</li>
+      <li><strong>Lanche:</strong> Ovo cozido + fatia de queijo cottage + pepino em palitos.</li>
+      <li><strong>Jantar:</strong> Salmão assado com brócolis e purê de batata-doce.</li>
+      <li><strong>Ceia (se necessário):</strong> Iogurte grego natural + colher de pasta de amendoim.</li>
+    </ul>
+    <h2 class="section-heading">Snacks que salvam o dia</h2>
+    <ul class="content-list">
+      <li>Castanhas (porção de 30g — ricas em gorduras boas)</li>
+      <li>Queijo cottage com ervas</li>
+      <li>Edamame (soja jovem) — prático e proteico</li>
+      <li>Atum com biscoito de arroz</li>
+    </ul>
+    <h2 class="section-heading">O que evitar nas refeições</h2>
+    <ul class="content-list">
+      <li>Alimentos muito gordurosos ou frituras — pioram a náusea.</li>
+      <li>Bebidas durante as refeições — ocupam espaço que deveria ser da comida.</li>
+      <li>Porções grandes de uma vez — seu estômago agora funciona de forma diferente.</li>
+    </ul>
+    <div class="highlight-box">
+      "Com o Mounjaro, você vai querer comer menos. Por isso, cada garfada precisa contar. Qualidade sobre quantidade — sempre."
+    </div>
+  </div>
+
+  <!-- PAGE 16: Cap 13 — Eventos Sociais -->
+  <div class="page" data-page="16" data-title="Cap. 13 — Eventos Sociais e Restaurantes">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">13</div>
+    <div class="page-eyebrow">Capítulo 13</div>
+    <h1 class="page-title">Como se Virar em Eventos Sociais e Restaurantes</h1>
+    <div class="title-rule"></div>
+    <p>Uma das situações mais desafiadoras no tratamento é manter os hábitos quando a vida social chama. Festas, almoços em família, happy hours, aniversários — a comida está em todo lugar. E junto com ela, os comentários das pessoas.</p>
+    <h2 class="section-heading">No restaurante</h2>
+    <ul class="content-list">
+      <li>Consulte o cardápio online antes de sair — chegue já com a escolha na mente.</li>
+      <li>Peça meia-porção quando possível, ou divida com alguém.</li>
+      <li>Prefira grelhados, assados ou cozidos no vapor.</li>
+      <li>Beba água antes de pedir — reduz a tentação de escolher por impulso.</li>
+      <li>Molhos e temperos à parte: muitos restaurantes usam quantidades excessivas de gordura.</li>
+    </ul>
+    <h2 class="section-heading">Em festas e confraternizações</h2>
+    <ul class="content-list">
+      <li>Coma algo leve em casa antes — não chegue com fome extrema.</li>
+      <li>Fique perto dos legumes, frios e proteínas na mesa de frios.</li>
+      <li>Você não precisa provar tudo — "não, obrigado" é uma frase completa.</li>
+      <li>Alcoólicos com moderação: prefira vinho seco ou destilados puros em vez de drinks açucarados.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>💬 Como lidar com os comentários</strong>
+      <p>"Você não vai comer mais nada?" — "Estou satisfeito(a), obrigado(a)!"<br>
+      "Você emagrece, mas depois engorda tudo de novo" — "Estou cuidando da minha saúde. Obrigado pela preocupação."<br>
+      Você não precisa explicar seu tratamento para ninguém.</p>
+    </div>
+    <h2 class="section-heading">Viagens</h2>
+    <p>Mantenha snacks proteicos na bolsa (castanhas, barrinha de proteína). Pesquise restaurantes no destino com antecedência. Em hotéis, prefira o café da manhã buffet e monte um prato equilibrado.</p>
+    <div class="highlight-box">
+      "A vida social não precisa parar por causa do tratamento. Com estratégia, você pode estar em qualquer lugar e continuar no caminho certo."
+    </div>
+  </div>
+
+  <!-- PAGE 17: Cap 14 — Platôs -->
+  <div class="page" data-page="17" data-title="Cap. 14 — Quando o Peso Para de Cair">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">14</div>
+    <div class="page-eyebrow">Capítulo 14</div>
+    <h1 class="page-title">Quando o Peso Para de Cair: Quebrando o Platô</h1>
+    <div class="title-rule"></div>
+    <p>Você estava perdendo peso consistentemente e, de repente, a balança travou. Passaram semanas e o número não muda. Isso se chama <strong>platô</strong> — e é uma das fases mais frustrantes da jornada. Mas tem solução.</p>
+    <h2 class="section-heading">Por que o platô acontece?</h2>
+    <p>O corpo é inteligente. Quando percebe que está perdendo peso, começa a adaptar o metabolismo para gastar menos energia — um mecanismo de sobrevivência evolutivo. Além disso, ao perder peso, você precisa de menos calorias para manter o novo corpo.</p>
+    <div class="warning-box">
+      <strong>⚠️ O platô não é falha sua</strong>
+      <p>Não significa que você parou de fazer as coisas certas. É biologia. A chave é não desistir e fazer ajustes estratégicos.</p>
+    </div>
+    <h2 class="section-heading">Estratégias para quebrar o platô</h2>
+    <ul class="content-list">
+      <li><strong>Reavalie a ingestão calórica</strong> — com menos peso, o metabolismo mudou. Recalcule suas necessidades.</li>
+      <li><strong>Varie o treino</strong> — o corpo se adapta aos exercícios. Adicione um novo estímulo: mais peso, mais repetições, outro tipo de exercício.</li>
+      <li><strong>Aumente as proteínas</strong> — efeito termogênico e proteção muscular durante a adaptação.</li>
+      <li><strong>Refeed estratégico</strong> — um dia com mais carboidratos (dentro do plano) pode "reiniciar" o metabolismo.</li>
+      <li><strong>Priorize o sono</strong> — privação de sono aumenta o cortisol e bloqueia a perda de gordura.</li>
+      <li><strong>Converse com o médico</strong> — pode ser hora de ajustar a dose do Mounjaro.</li>
+    </ul>
+    <h2 class="section-heading">O que NÃO fazer no platô</h2>
+    <ul class="content-list">
+      <li>Cortar calorias drasticamente — piora a adaptação metabólica.</li>
+      <li>Parar os exercícios — perde músculo e desacelera mais ainda.</li>
+      <li>Abandonar o tratamento — o platô é temporário.</li>
+    </ul>
+    <div class="highlight-box">
+      "Um platô não é um sinal de parada. É o seu corpo pedindo um ajuste. Ouça-o, faça os ajustes e continue."
+    </div>
+  </div>
+
+  <!-- PAGE 18: Cap 15 — Sono e Hormônios -->
+  <div class="page" data-page="18" data-title="Cap. 15 — Sono, Estresse e Hormônios">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">15</div>
+    <div class="page-eyebrow">Capítulo 15</div>
+    <h1 class="page-title">Sono, Estresse e Hormônios: O Triângulo Invisível</h1>
+    <div class="title-rule"></div>
+    <p>Você pode fazer tudo certo — comer bem, se exercitar, usar o Mounjaro corretamente — e ainda assim ter dificuldade para emagrecer se ignorar esses três fatores. Sono, estresse e hormônios formam um triângulo invisível que governa boa parte do seu resultado.</p>
+    <h2 class="section-heading">O que acontece quando você não dorme bem</h2>
+    <ul class="content-list">
+      <li>O cortisol (hormônio do estresse) aumenta — favorece o acúmulo de gordura abdominal.</li>
+      <li>A grelina (hormônio da fome) sobe — você sente mais fome mesmo com o Mounjaro.</li>
+      <li>A leptina (hormônio da saciedade) cai — o cérebro não recebe o sinal de "cheio".</li>
+      <li>O GH (hormônio do crescimento) é secretado principalmente durante o sono profundo — essencial para queimar gordura e preservar músculo.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>🌙 Meta de sono</strong>
+      <p>7 a 9 horas por noite, com horário regular de dormir e acordar. A qualidade importa tanto quanto a quantidade — evite telas 1h antes de dormir.</p>
+    </div>
+    <h2 class="section-heading">Cortisol e emagrecimento</h2>
+    <p>Estresse crônico mantém o cortisol elevado. Isso não apenas dificulta a perda de gordura, mas aumenta o apetite emocional e favorece o acúmulo na região abdominal — exatamente onde queremos perder.</p>
+    <h2 class="section-heading">Como regular o eixo sono-estresse-hormônios</h2>
+    <ul class="content-list">
+      <li>Rotina de sono consistente — mesmo nos fins de semana.</li>
+      <li>Meditação ou respiração profunda por 10 minutos ao dia.</li>
+      <li>Exposição ao sol pela manhã — regula o ritmo circadiano.</li>
+      <li>Evitar cafeína após as 14h.</li>
+      <li>Exercícios moderados (não intensos) à noite — ajudam o sono.</li>
+    </ul>
+    <div class="highlight-box">
+      "Dormir 8 horas não é preguiça — é protocolo de emagrecimento. Trate o sono com a mesma seriedade que a dieta e o exercício."
+    </div>
+  </div>
+
+  <!-- PAGE 19: Cap 16 — Relacionamentos -->
+  <div class="page" data-page="19" data-title="Cap. 16 — Relacionamentos e a Nova Imagem">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">16</div>
+    <div class="page-eyebrow">Capítulo 16</div>
+    <h1 class="page-title">Relacionamentos e a Nova Imagem Corporal</h1>
+    <div class="title-rule"></div>
+    <p>Emagrecer transforma não apenas o corpo — transforma também as relações. Algumas pessoas ficam mais animadas com sua mudança do que você esperava. Outras ficam desconfortáveis. E algumas podem, sem perceber, sabotar sua jornada.</p>
+    <h2 class="section-heading">Por que algumas pessoas reagem mal</h2>
+    <p>Quando você muda, espelha nas outras pessoas o que elas não estão fazendo. Isso pode gerar inveja velada, comentários disfarçados de "preocupação" ou tentativas de te fazer sair do plano ("Um pedacinho não vai fazer mal").</p>
+    <div class="warning-box">
+      <strong>⚠️ Sabotagem emocional</strong>
+      <p>Nem sempre é intencional. Pessoas próximas podem inconscientemente te convidar para "sair da dieta" porque se sentem inseguras com a sua transformação. Reconheça os padrões sem julgamento — e mantenha o foco.</p>
+    </div>
+    <h2 class="section-heading">Relacionamentos amorosos</h2>
+    <p>A perda de peso pode mudar a dinâmica do casal. Você pode ganhar mais confiança, mais atenção de terceiros, mais disposição. Isso é positivo — mas requer conversas abertas e honestas com o parceiro sobre as mudanças que estão acontecendo.</p>
+    <h2 class="section-heading">A nova relação com você mesmo(a)</h2>
+    <ul class="content-list">
+      <li>A imagem mental do corpo demora a acompanhar a imagem real — isso é normal.</li>
+      <li>Você pode continuar se enxergando como antes mesmo após perder muito peso.</li>
+      <li>Celebre conquistas não-visuais: disposição, saúde nos exames, autoconfiança.</li>
+    </ul>
+    <div class="highlight-box">
+      "Você não deve satisfação a ninguém sobre as escolhas do seu corpo. Transformação é um ato de amor-próprio — e amor-próprio não precisa de aprovação."
+    </div>
+  </div>
+
+  <!-- PAGE 20: Cap 17 — Mulheres e o Mounjaro -->
+  <div class="page" data-page="20" data-title="Cap. 17 — Mulheres e o Mounjaro">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">17</div>
+    <div class="page-eyebrow">Capítulo 17</div>
+    <h1 class="page-title">Mulheres e o Mounjaro: Ciclo, Menopausa e Especificidades</h1>
+    <div class="title-rule"></div>
+    <p>A maioria das pessoas que usam Mounjaro para emagrecimento são mulheres — e o corpo feminino tem particularidades hormonais que afetam diretamente o resultado do tratamento.</p>
+    <h2 class="section-heading">O ciclo menstrual e o peso</h2>
+    <p>É normal o peso variar de 1 a 3 kg ao longo do ciclo menstrual devido à retenção hídrica — especialmente na fase lútea (após a ovulação). Não entre em pânico com a balança nessa semana. Essa variação não é gordura.</p>
+    <div class="tip-box">
+      <strong>📅 Dica do ciclo</strong>
+      <p>Pese-se sempre no mesmo dia da semana, preferencialmente na fase folicular (logo após a menstruação), quando a retenção hídrica é menor. Isso dá uma leitura mais precisa do progresso real.</p>
+    </div>
+    <h2 class="section-heading">SOP (Síndrome do Ovário Policístico)</h2>
+    <p>Mulheres com SOP têm resistência à insulina aumentada, o que pode dificultar o emagrecimento. O Mounjaro, ao melhorar a sensibilidade à insulina, pode ser especialmente benéfico para esse grupo — mas o acompanhamento médico é ainda mais importante.</p>
+    <h2 class="section-heading">Menopausa e pré-menopausa</h2>
+    <p>A queda do estrogênio favorece o acúmulo de gordura abdominal e dificulta o emagrecimento. O Mounjaro pode ajudar, mas mulheres nessa fase podem precisar de estratégias adicionais:</p>
+    <ul class="content-list">
+      <li>Mais treino de força (protege ossos e músculo).</li>
+      <li>Avaliação de terapia hormonal com ginecologista.</li>
+      <li>Atenção redobrada ao cálcio e vitamina D.</li>
+      <li>Gerenciamento do estresse (cortisol é ainda mais impactante pós-menopausa).</li>
+    </ul>
+    <div class="highlight-box">
+      "O corpo feminino é complexo e poderoso. Entender suas fases não é desculpa — é estratégia."
+    </div>
+  </div>
+
+  <!-- PAGE 21: Cap 18 — Custos e Logística -->
+  <div class="page" data-page="21" data-title="Cap. 18 — Custos e Logística do Tratamento">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">18</div>
+    <div class="page-eyebrow">Capítulo 18</div>
+    <h1 class="page-title">Custos, Logística e Continuidade do Tratamento</h1>
+    <div class="title-rule"></div>
+    <p>O Mounjaro é um medicamento de alto custo, e planejar financeiramente o tratamento é tão importante quanto seguir o plano alimentar. Conhecer as formas de acesso, as opções disponíveis e como manter a continuidade sem quebrar o orçamento é fundamental.</p>
+    <h2 class="section-heading">Por que o Mounjaro custa mais?</h2>
+    <p>Por ser uma molécula de ação dupla (GIP + GLP-1), o Mounjaro é tecnologicamente mais complexo do que outros análogos de GLP-1. Isso se reflete no preço — mas também nos resultados mais expressivos.</p>
+    <div class="tip-box">
+      <strong>💊 Dica de compra</strong>
+      <p>Sempre compare preços em farmácias de manipulação e lojas físicas. Algumas redes têm programas de fidelidade ou desconto para clientes com prescrição contínua. O programa de apoio ao paciente da fabricante também pode oferecer descontos.</p>
+    </div>
+    <h2 class="section-heading">Logística das aplicações</h2>
+    <ul class="content-list">
+      <li><strong>Aplicação semanal</strong> — crie um dia fixo da semana e coloque um alarme recorrente no celular.</li>
+      <li><strong>Armazenamento</strong> — refrigerado entre 2°C e 8°C. Pode ficar fora da geladeira por até 21 dias em temperatura ambiente (até 30°C).</li>
+      <li><strong>Transporte</strong> — em viagens, use bolsas térmicas com gelo reutilizável. Não congele.</li>
+      <li><strong>Descarte</strong> — as canetas usadas devem ser descartadas em coletores de materiais perfurocortantes.</li>
+    </ul>
+    <h2 class="section-heading">Como manter a continuidade</h2>
+    <ul class="content-list">
+      <li>Agende as consultas médicas com antecedência — a renovação da receita não pode ser interrompida.</li>
+      <li>Mantenha sempre uma aplicação de reserva para emergências.</li>
+      <li>Comunique seu médico imediatamente se precisar pausar por razões financeiras — há alternativas para não perder o progresso.</li>
+    </ul>
+    <div class="highlight-box">
+      "Investir na sua saúde agora reduz custos com médicos, exames e internações no futuro. O Mounjaro é caro — mas o custo da obesidade não tratada é muito maior."
+    </div>
+  </div>
+
+  <!-- PAGE 22: Cap 19 — FAQ -->
+  <div class="page" data-page="22" data-title="Cap. 19 — Perguntas Frequentes">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">19</div>
+    <div class="page-eyebrow">Capítulo 19</div>
+    <h1 class="page-title">Perguntas Frequentes</h1>
+    <div class="title-rule"></div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Posso tomar o Mounjaro sem dieta?</div>
+      <div class="faq-a">Tecnicamente sim, mas os resultados serão muito menores. O Mounjaro potencializa uma alimentação equilibrada — sem ela, os benefícios são limitados e o risco de efeitos colaterais aumenta.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Quanto tempo leva para o Mounjaro fazer efeito?</div>
+      <div class="faq-a">A redução do apetite começa nas primeiras semanas, mas a perda de peso mais expressiva tende a aparecer a partir do segundo mês, quando a dose já foi ajustada.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Posso beber álcool durante o tratamento?</div>
+      <div class="faq-a">O álcool não é formalmente contraindicado, mas pode piorar os efeitos gastrointestinais e adicionar calorias vazias à dieta. Se consumir, faça com muita moderação.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">O que fazer se esquecer de aplicar a dose?</div>
+      <div class="faq-a">Se lembrar até 4 dias após o dia habitual, aplique assim que possível. Se passarem mais de 4 dias, pule essa dose e retome na semana seguinte. Nunca aplique duas doses na mesma semana.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">O Mounjaro causa queda de cabelo?</div>
+      <div class="faq-a">A queda de cabelo não é um efeito direto do Mounjaro, mas pode acontecer como consequência da perda de peso rápida (eflúvio telógeno). Geralmente é temporário e melhora com alimentação proteica adequada.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Posso usar Mounjaro se não sou diabético?</div>
+      <div class="faq-a">Sim. O Mounjaro é aprovado para tratamento da obesidade, independentemente do diagnóstico de diabetes. Seu médico avaliará os critérios indicados para o seu caso.</div>
+    </div>
+  </div>
+
+  <!-- PAGE 23: Resumo -->
+  <div class="page" data-page="23" data-title="Resumo Personalizado">
+    <span class="read-badge">✓ Lida</span>
+    <div class="page-eyebrow">Conclusão</div>
+    <h1 class="page-title">Seu Resumo Personalizado</h1>
+    <div class="title-rule"></div>
+    <p>Com base nas suas respostas ao longo do ebook, preparamos um resumo pensado especialmente para o seu momento de jornada.</p>
+    <div id="summary-content">
+      <p style="color:var(--text-light);font-style:italic;">Responda às perguntas interativas nos Capítulos 5 e 8 para receber seu resumo personalizado aqui!</p>
+    </div>
+    <div class="highlight-box" style="margin-top:28px;">
+      "Você chegou ao final deste ebook. Isso já é uma vitória — mostra comprometimento com a sua saúde e com o seu futuro. Continue assim."
+    </div>
+    <div style="text-align:center;margin-top:28px;padding-top:22px;border-top:1px solid var(--border);">
+      <div style="font-size:2rem;margin-bottom:10px;">🌿</div>
+      <div style="font-family:var(--font-sans);font-size:0.75rem;color:var(--text-light);letter-spacing:0.09em;text-transform:uppercase;">Pós Mounjaro — Guia Completo</div>
+      <div style="font-family:var(--font-sans);font-size:0.68rem;color:var(--border);margin-top:5px;">Cuide-se sempre com orientação profissional.</div>
+    </div>
+  </div>
+
+</div><!-- /book-container -->
+</div><!-- /book-stage -->
+</div><!-- /book-wrap -->
+
+<div id="nav-wrap">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Anterior</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <button id="btn-home" class="nav-btn" onclick="goToPage(1)">↩ Início</button>
+    <div id="page-info">Página 1 de 15</div>
+  </div>
+  <button class="nav-btn" id="btn-next" onclick="navigate(1)">Próxima →</button>
+</div>
+<div id="mark-wrap">
+  <button class="mark-read-btn" id="btn-mark-read" onclick="toggleRead()">☆ Marcar como lida</button>
+</div>
+
+<script>
+const TOTAL = 23;
+const LS_PAGE  = 'ebookPM_pagina';
+const LS_LIDAS = 'ebookPM_lidas';
+const LS_FONT  = 'ebookPM_fontSize';
+const LS_RESP  = 'ebookPM_respostas';
+
+const TITLES = [
+  'Capa','Sobre este Ebook','Introdução',
+  'Cap. 1 — O Que É o Mounjaro','Cap. 2 — Os Primeiros Dias',
+  'Cap. 3 — Alimentação','Cap. 4 — Hidratação e Suplementação',
+  'Cap. 5 — Efeitos Colaterais ★','Cap. 6 — Exercícios Físicos',
+  'Cap. 7 — Saúde Mental','Cap. 8 — Resultados ★',
+  'Cap. 9 — Dicas para Potencializar','Cap. 10 — Manutenção',
+  'Cap. 11 — A Saúde da Pele','Cap. 12 — Receitas Práticas',
+  'Cap. 13 — Eventos Sociais','Cap. 14 — Quebrando o Platô',
+  'Cap. 15 — Sono e Hormônios','Cap. 16 — Relacionamentos',
+  'Cap. 17 — Mulheres e o Mounjaro','Cap. 18 — Custos e Logística',
+  'Cap. 19 — Perguntas Frequentes','Resumo Personalizado'
+];
+
+let current = 1;
+let fontSize = 18;
+let lidas = new Set();
+let respostas = {};
+let flipping = false; /* mantido para compatibilidade com drag gesture */
+
+function init() {
+  current  = parseInt(localStorage.getItem(LS_PAGE)) || 1;
+  fontSize = parseInt(localStorage.getItem(LS_FONT)) || 18;
+  lidas    = new Set(JSON.parse(localStorage.getItem(LS_LIDAS) || '[]'));
+  respostas = JSON.parse(localStorage.getItem(LS_RESP) || '{}');
+  document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+  buildSidebar();
+  showPage(current);
+  restoreReadBadges();
+  restoreQuiz();
+}
+
+/* ── Page display (instant, no animation) ── */
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.querySelector(`.page[data-page="${n}"]`);
+  if (el) el.classList.add('active');
+  current = n;
+  updateUI();
+  localStorage.setItem(LS_PAGE, n);
+}
+
+function navigate(dir) {
+  const next = current + dir;
+  if (next < 1 || next > TOTAL) return;
+  goToPage(next);
+}
+
+function goToPage(n) {
+  if (n === current) return;
+  showPage(n);
+  if (n === 23) generateSummary();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── UI Updates ── */
+function updateUI() {
+  document.getElementById('btn-prev').disabled = current === 1;
+  document.getElementById('btn-next').disabled = current === TOTAL;
+  document.getElementById('page-info').textContent = `Página ${current} de ${TOTAL}`;
+  document.getElementById('page-counter-header').textContent = `${current} / ${TOTAL}`;
+  document.getElementById('progress-bar').style.width = (current / TOTAL * 100) + '%';
+  document.getElementById('header-title').textContent = TITLES[current - 1];
+  updateSidebarActive();
+  updateMarkBtn();
+}
+
+/* ── Mark as Read ── */
+function toggleRead() {
+  if (current === 1) return;
+  if (lidas.has(current)) {
+    lidas.delete(current);
+  } else {
+    lidas.add(current);
+  }
+  localStorage.setItem(LS_LIDAS, JSON.stringify([...lidas]));
+  restoreReadBadges();
+  updateMarkBtn();
+  updateSidebarActive();
+}
+
+function restoreReadBadges() {
+  document.querySelectorAll('.page').forEach(p => {
+    const n = parseInt(p.dataset.page);
+    p.classList.toggle('marked-read', lidas.has(n));
+  });
+}
+
+function updateMarkBtn() {
+  const wrap = document.getElementById('mark-wrap');
+  const btn  = document.getElementById('btn-mark-read');
+  if (current === 1) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+  const done = lidas.has(current);
+  btn.textContent = done ? '✓ Marcada como lida' : '☆ Marcar como lida';
+  btn.classList.toggle('done', done);
+}
+
+/* ── Sidebar ── */
+function buildSidebar() {
+  const ul = document.getElementById('chapter-list');
+  ul.innerHTML = '';
+  TITLES.forEach((title, i) => {
+    const n = i + 1;
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.innerHTML = `<span class="chapter-num">${n}</span>${title}<span class="check-icon">✓</span>`;
+    btn.onclick = () => { goToPage(n); toggleSidebar(); };
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+  updateSidebarActive();
+}
+
+function updateSidebarActive() {
+  const btns = document.querySelectorAll('#chapter-list button');
+  btns.forEach((btn, i) => {
+    const n = i + 1;
+    btn.classList.toggle('active', n === current);
+    btn.classList.toggle('read-done', lidas.has(n));
+    btn.querySelector('.check-icon').style.display = lidas.has(n) ? 'inline' : 'none';
+  });
+  document.getElementById('read-count').textContent = `${lidas.size} / ${TOTAL} páginas lidas`;
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
+/* ── Font Size ── */
+function changeFontSize(d) {
+  fontSize = Math.min(26, Math.max(14, fontSize + d));
+  document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+  localStorage.setItem(LS_FONT, fontSize);
+}
+
+/* ── Quiz ── */
+function selectOption(qId, val, btn) {
+  document.getElementById(qId + '-options').querySelectorAll('.quiz-option')
+    .forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  respostas[qId] = val;
+  localStorage.setItem(LS_RESP, JSON.stringify(respostas));
+}
+
+function restoreQuiz() {
+  Object.entries(respostas).forEach(([qId, val]) => {
+    const cont = document.getElementById(qId + '-options');
+    if (!cont) return;
+    cont.querySelectorAll('.quiz-option').forEach(btn => {
+      if (btn.getAttribute('onclick').includes(`'${val}'`)) btn.classList.add('selected');
+    });
+  });
+}
+
+/* ── Summary ── */
+function generateSummary() {
+  const el = document.getElementById('summary-content');
+  const {q1, q2, q3, q4} = respostas;
+  if (!q1 && !q2 && !q3 && !q4) return;
+
+  const fases = {
+    '1a2':   'Você está na <strong>fase inicial</strong> (1–2 meses). Este é o momento de adaptação. Os resultados mais expressivos vêm nas próximas semanas — mantenha a consistência.',
+    '3a6':   'Você está na <strong>fase intermediária</strong> (3–6 meses). Parabéns! A maioria das pessoas já consegue ver e sentir os resultados de forma clara nesse período.',
+    'mais6': 'Você está na <strong>fase avançada</strong> (mais de 6 meses). Você percorreu um longo caminho! Agora o foco é consolidar os ganhos e preparar a manutenção.'
+  };
+  const efeitos = {
+    'nausea':      'A <strong>náusea</strong> é muito comum nas fases iniciais. Refeições menores e frequentes, gengibre e evitar gordurosos são as melhores estratégias.',
+    'fadiga':      'A <strong>fadiga</strong> é resultado da adaptação metabólica. Garanta sono adequado, proteína suficiente e boa hidratação — melhora com o tempo.',
+    'constipacao': 'A <strong>constipação</strong> responde bem a mais fibras, mais água e caminhadas leves após as refeições.',
+    'nenhum':      'Que ótimo que você teve poucos efeitos colaterais! Seu organismo se adaptou bem — foque totalmente na construção de hábitos saudáveis.'
+  };
+  const apetites = {
+    'muito_reduzido': 'Seu apetite está <strong>muito reduzido</strong>. Coma por horário, não por fome — o corpo precisa de nutrientes mesmo sem sinalizá-los.',
+    'pouco_reduzido': 'Com apetite <strong>um pouco reduzido</strong>, você está em posição confortável para fazer escolhas conscientes sem sentir privação.',
+    'normal':         'Se o apetite está <strong>praticamente normal</strong>, converse com seu médico — pode haver necessidade de ajuste de dose.'
+  };
+  const objetivos = {
+    'emagrecer': 'Para <strong>emagrecer com qualidade</strong>: priorize proteínas, combine com treino de força e mantenha déficit calórico moderado (0,5–1 kg/semana é saudável).',
+    'manter':    'Para <strong>manter o peso conquistado</strong>: monitore semanalmente, mantenha atividade física e fique atento a gatilhos emocionais.',
+    'saude':     'Priorizando a <strong>saúde geral</strong>, você tem a perspectiva mais completa. Acompanhe pressão, glicemia e colesterol — saúde é muito mais do que um número.'
+  };
+
+  let html = '';
+  if (q3 && fases[q3])      html += `<div class="summary-section"><h3>📍 Sua fase</h3><p>${fases[q3]}</p></div>`;
+  if (q1 && efeitos[q1])    html += `<div class="summary-section"><h3>💊 Efeitos colaterais</h3><p>${efeitos[q1]}</p></div>`;
+  if (q2 && apetites[q2])   html += `<div class="summary-section"><h3>🍽️ Seu apetite</h3><p>${apetites[q2]}</p></div>`;
+  if (q4 && objetivos[q4])  html += `<div class="summary-section"><h3>🎯 Seu objetivo</h3><p>${objetivos[q4]}</p></div>`;
+  html += `<div class="summary-section" style="background:var(--accent-pale)"><h3>✨ Mensagem final</h3><p>Com tudo que você compartilhou, fica claro que está engajado(a) com a sua jornada. Independentemente da fase, o mais importante é: <strong>continue</strong>. Os resultados são consequência da consistência. Você já está no caminho certo.</p></div>`;
+
+  el.innerHTML = html;
+}
+
+/* ── FAQ ── */
+function toggleFaq(item) { item.classList.toggle('open'); }
+
+/* ── Keyboard navigation ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+});
+
+/* ── Gesto de arrasto (mouse + touch) para virar página ── */
+(function setupDragGesture() {
+  const container = document.getElementById('book-container');
+  const INTERACTIVE = 'button, a, input, select, textarea, .quiz-section, .faq-item, .quiz-option, .ctrl-btn, .nav-btn, .mark-read-btn';
+  const DRAG_THRESHOLD = 50;  /* px mínimo para considerar arrasto */
+
+  let startX = 0, startY = 0, dragging = false, dragDir = 0;
+
+  /* ── Indicador visual de arrasto ── */
+  const dragHint = document.createElement('div');
+  dragHint.id = 'drag-hint';
+  dragHint.style.cssText = `
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background:rgba(139,105,20,0.12);
+    border:2px solid rgba(139,105,20,0.25);
+    border-radius:50px;
+    padding:10px 22px;
+    font-family:var(--font-sans);
+    font-size:1.1rem;
+    color:var(--accent);
+    pointer-events:none;
+    z-index:50;
+    transition:transform 0.18s ease, opacity 0.18s ease;
+    opacity:0;
+    white-space:nowrap;
+    backdrop-filter:blur(4px);
+  `;
+  container.appendChild(dragHint);
+
+  function showHint(dx) {
+    if (Math.abs(dx) < 20) { hideHint(); return; }
+    dragHint.textContent = dx > 0 ? '→ Próxima' : '← Anterior';
+    dragHint.style.transform = 'translate(-50%,-50%) scale(1)';
+    dragHint.style.opacity   = '1';
+  }
+  function hideHint() {
+    dragHint.style.transform = 'translate(-50%,-50%) scale(0)';
+    dragHint.style.opacity   = '0';
+  }
+
+  /* ── Cursor ── */
+  function setCursor(state) {
+    container.style.cursor = state === 'grab'    ? 'grab'
+                           : state === 'grabbing' ? 'grabbing'
+                           : 'pointer';
+  }
+
+  /* ── MOUSE ── */
+  container.addEventListener('mouseenter', () => { if (!flipping) setCursor('grab'); });
+  container.addEventListener('mouseleave', () => { container.style.cursor = ''; hideHint(); dragging = false; });
+
+  container.addEventListener('mouseover', e => {
+    if (e.target.closest(INTERACTIVE)) container.style.cursor = '';
+    else if (!dragging && !flipping) setCursor('grab');
+  });
+
+  container.addEventListener('mousedown', e => {
+    if (flipping) return;
+    if (e.target.closest(INTERACTIVE)) return;
+    e.preventDefault();
+    startX   = e.clientX;
+    startY   = e.clientY;
+    dragging = true;
+    dragDir  = 0;
+    setCursor('grabbing');
+  });
+
+  container.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    dragDir = dx;
+    showHint(dx);
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!dragging) return;
+    dragging = false;
+    hideHint();
+    setCursor('grab');
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) < DRAG_THRESHOLD || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    /* ← esquerda para direita = próxima; → direita para esquerda = anterior */
+    if (dx > 0) navigate(1);
+    else        navigate(-1);
+  });
+
+  /* ── TOUCH ── */
+  container.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    dragging = true;
+    dragDir  = 0;
+  }, { passive: true });
+
+  container.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    dragDir = e.touches[0].clientX - startX;
+    showHint(dragDir);
+  }, { passive: true });
+
+  container.addEventListener('touchend', e => {
+    if (!dragging) return;
+    dragging = false;
+    hideHint();
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < DRAG_THRESHOLD || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    if (dx > 0) navigate(1);
+    else        navigate(-1);
+  }, { passive: true });
+})();
+
+init();
+</script>
+</body>
+</html>
