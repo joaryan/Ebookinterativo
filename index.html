@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pós Mounjaro: Sua Jornada de Transformação</title>
+<script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -182,52 +183,41 @@ body {
 /* ── Book Wrapper ── */
 #book-wrap {
   width: 100%;
-  max-width: 720px;
+  max-width: 1060px;
   padding: 28px 16px 0;
+  display: flex;
+  justify-content: center;
 }
 
 /* ── FLIPBOOK STAGE ── */
 #book-stage {
-  /* perspective no stage para não cortar o 3D */
-  perspective: 1300px;
-  perspective-origin: 50% 38%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 #book-container {
   position: relative;
-  min-height: 74vh;
   background: var(--page-bg);
   border-radius: var(--radius);
   box-shadow:
     0 2px 8px var(--shadow),
-    0 12px 40px rgba(100,75,20,0.10),
-    5px 5px 0 var(--border);
-  overflow: hidden;
+    0 20px 60px rgba(100,75,20,0.18),
+    0 0 0 1px var(--border);
 }
 
-/* ── Pages ── */
+/* ── Pages (gerenciadas pelo StPageFlip) ── */
 .page {
-  display: none;
   width: 100%;
-  padding: 48px 52px 44px;
+  height: 100%;
+  padding: 44px 48px 40px;
   position: relative;
-  backface-visibility: hidden;
-  will-change: transform, filter;
+  background: var(--page-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
-@media (max-width: 580px) { .page { padding: 30px 22px 32px; } }
-
-.page.active { display: block; }
-
-/* Sombra de virada sobre a página ativa durante o flip */
-#page-sweep {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0;
-  border-radius: var(--radius);
-  background: linear-gradient(to right, transparent 30%, rgba(44,22,0,0.22) 60%, transparent);
-}
+@media (max-width: 580px) { .page { padding: 28px 20px 28px; } }
 
 /* ── Read Badge ── */
 .read-badge {
@@ -248,11 +238,21 @@ body {
 .page.marked-read .read-badge { display: inline-block; }
 
 /* ── Cover ── */
-.cover-page.active {
-  display: flex;   /* override block → flex only when active */
-}
 .cover-page {
   background: linear-gradient(155deg, #3d2b08 0%, #6b4a18 45%, #8b6914 100%);
+  padding: 0 !important;
+}
+.cover-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #f5ecd0;
+  min-height: 100%;
+  padding: 60px 40px;
+}
+.cover-page-old {
   color: #f5ecd0;
   min-height: 74vh;
   flex-direction: column;
@@ -576,16 +576,16 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
 <div id="book-wrap">
 <div id="book-stage">
 <div id="book-container">
-  <div id="page-sweep"></div>
-
   <!-- PAGE 1: Capa -->
   <div class="page cover-page" data-page="1" data-title="Capa">
-    <div class="cover-ornament">🌿</div>
-    <div class="cover-eyebrow">Guia Completo</div>
-    <h1 class="cover-title">Pós Mounjaro:<br>Sua Jornada de<br>Transformação</h1>
-    <p class="cover-subtitle">Tudo o que você precisa saber para viver bem durante e após o tratamento com Mounjaro.</p>
-    <div class="cover-divider"></div>
-    <div class="cover-author">Guia Prático em Português Brasileiro</div>
+    <div class="cover-inner">
+      <div class="cover-ornament">🌿</div>
+      <div class="cover-eyebrow">Guia Completo</div>
+      <h1 class="cover-title">Pós Mounjaro:<br>Sua Jornada de<br>Transformação</h1>
+      <p class="cover-subtitle">Tudo o que você precisa saber para viver bem durante e após o tratamento com Mounjaro.</p>
+      <div class="cover-divider"></div>
+      <div class="cover-author">Guia Prático em Português Brasileiro</div>
+    </div>
   </div>
 
   <!-- PAGE 2: Sobre este Ebook -->
@@ -1306,41 +1306,69 @@ let current = 1;
 let fontSize = 18;
 let lidas = new Set();
 let respostas = {};
-let flipping = false; /* mantido para compatibilidade com drag gesture */
+let pageFlip;
 
 function init() {
-  current  = parseInt(localStorage.getItem(LS_PAGE)) || 1;
-  fontSize = parseInt(localStorage.getItem(LS_FONT)) || 18;
-  lidas    = new Set(JSON.parse(localStorage.getItem(LS_LIDAS) || '[]'));
+  current   = parseInt(localStorage.getItem(LS_PAGE)) || 1;
+  fontSize  = parseInt(localStorage.getItem(LS_FONT)) || 18;
+  lidas     = new Set(JSON.parse(localStorage.getItem(LS_LIDAS) || '[]'));
   respostas = JSON.parse(localStorage.getItem(LS_RESP) || '{}');
   document.documentElement.style.setProperty('--font-size', fontSize + 'px');
   buildSidebar();
-  showPage(current);
   restoreReadBadges();
   restoreQuiz();
+  initFlipBook();
 }
 
-/* ── Page display (instant, no animation) ── */
-function showPage(n) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const el = document.querySelector(`.page[data-page="${n}"]`);
-  if (el) el.classList.add('active');
-  current = n;
-  updateUI();
-  localStorage.setItem(LS_PAGE, n);
+function initFlipBook() {
+  const container = document.getElementById('book-container');
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const W  = Math.min(460, Math.floor(vw * 0.46));
+  const H  = Math.min(740, Math.max(460, Math.floor(vh * 0.78)));
+
+  pageFlip = new St.PageFlip(container, {
+    width:               W,
+    height:              H,
+    size:                'stretch',
+    minWidth:            240,
+    maxWidth:            520,
+    minHeight:           380,
+    maxHeight:           820,
+    maxShadowOpacity:    0.65,
+    showCover:           true,
+    mobileScrollSupport: true,
+    useMouseEvents:      true,
+    swipeDistance:       25,
+    clickEventForward:   false,
+    flippingTime:        680
+  });
+
+  pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+  pageFlip.on('flip', e => {
+    current = e.data + 1;
+    if (current === TOTAL) generateSummary();
+    localStorage.setItem(LS_PAGE, current);
+    updateUI();
+  });
+
+  if (current > 1) {
+    setTimeout(() => pageFlip.flip(current - 1), 350);
+  } else {
+    updateUI();
+  }
 }
 
 function navigate(dir) {
-  const next = current + dir;
-  if (next < 1 || next > TOTAL) return;
-  goToPage(next);
+  if (!pageFlip) return;
+  if (dir > 0) pageFlip.flipNext('bottom');
+  else         pageFlip.flipPrev('bottom');
 }
 
 function goToPage(n) {
-  if (n === current) return;
-  showPage(n);
-  if (n === 23) generateSummary();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!pageFlip || n === current) return;
+  pageFlip.flip(n - 1, 'bottom');
 }
 
 /* ── UI Updates ── */
@@ -1491,13 +1519,11 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
 });
 
-/* ── Gesto de arrasto (mouse + touch) para virar página ── */
-(function setupDragGesture() {
-  const container = document.getElementById('book-container');
-  const INTERACTIVE = 'button, a, input, select, textarea, .quiz-section, .faq-item, .quiz-option, .ctrl-btn, .nav-btn, .mark-read-btn';
-  const DRAG_THRESHOLD = 50;  /* px mínimo para considerar arrasto */
-
-  let startX = 0, startY = 0, dragging = false, dragDir = 0;
+/* StPageFlip tem drag/swipe nativo */
+if (false) {
+  let startX = 0, startY = 0, dragging = false;
+  const DRAG_THRESHOLD = 50;
+  const container = null;
 
   /* ── Indicador visual de arrasto ── */
   const dragHint = document.createElement('div');
@@ -1604,7 +1630,7 @@ document.addEventListener('keydown', e => {
     if (dx > 0) navigate(1);
     else        navigate(-1);
   }, { passive: true });
-})();
+}
 
 init();
 </script>
