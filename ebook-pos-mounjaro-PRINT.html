@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Pós Mounjaro — Versão Impressão</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #fffdf7;
+    --text:    #2c2416;
+    --light:   #6b5a3e;
+    --accent:  #8b6914;
+    --pale:    #f0e6c8;
+    --border:  #d9cdb0;
+    --green-bg:#e8f5e0;
+    --green-bd:#a3c98a;
+    --green-tx:#3a7020;
+    --warn-bg: #fff4e0;
+    --warn-bd: #d4941a;
+    --warn-tx: #a06010;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Lato', Georgia, serif;
+    color: var(--text);
+    background: #e0dbd0;
+  }
+
+  /* ── Cada página do ebook = 1 página A4 ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--bg);
+    margin: 0 auto 8px;
+    padding: 18mm 18mm 16mm;
+    page-break-after: always;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Número de página rodapé */
+  .page::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: 10mm;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Lato', sans-serif;
+    font-size: 8pt;
+    color: var(--border);
+    letter-spacing: 0.08em;
+  }
+
+  /* Linha decorativa no topo de cada página */
+  .page::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  /* ── CAPA ── */
+  .cover {
+    background: linear-gradient(160deg, #3d2b08 0%, #6b4a18 45%, #8b6914 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  }
+  .cover::before { display: none; }
+  .cover::after  { color: rgba(255,255,255,0.3); }
+
+  .cover-inner {
+    padding: 20mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 297mm;
+  }
+  .cover-leaf   { font-size: 52pt; margin-bottom: 14mm; }
+  .cover-eyebrow{
+    font-family:'Lato',sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #d4b56a;
+    margin-bottom: 10mm;
+  }
+  .cover-title  {
+    font-family:'Playfair Display', serif;
+    font-size: 34pt;
+    font-weight: 700;
+    color: #fff8e8;
+    line-height: 1.25;
+    margin-bottom: 8mm;
+  }
+  .cover-sub    {
+    font-size: 11pt;
+    color: #d4b56a;
+    line-height: 1.65;
+    max-width: 110mm;
+    margin-bottom: 16mm;
+  }
+  .cover-rule   { width: 40px; height: 1px; background: #d4b56a; margin: 0 auto 10mm; }
+  .cover-author { font-family:'Lato',sans-serif; font-size: 9pt; color: #c4a050; letter-spacing: 0.1em; }
+
+  /* ── Tipografia ── */
+  .eyebrow {
+    font-family:'Lato',sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  h1 {
+    font-family:'Playfair Display', serif;
+    font-size: 22pt;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .rule {
+    width: 36px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 10px 0 18px;
+  }
+  p {
+    font-size: 10pt;
+    line-height: 1.85;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  h2 {
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-size: 12pt;
+    color: var(--accent);
+    margin: 18px 0 7px;
+  }
+  ul, ol { padding-left: 16px; margin-bottom: 10px; }
+  li { font-size: 10pt; line-height: 1.8; margin-bottom: 3px; }
+
+  .chapter-num {
+    font-family:'Lato',sans-serif;
+    font-size: 48pt;
+    font-weight: 900;
+    color: var(--pale);
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+
+  .highlight {
+    background: var(--pale);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 5px 5px 0;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-style: italic;
+    font-size: 10pt;
+    line-height: 1.75;
+  }
+  .tip {
+    background: var(--green-bg);
+    border: 1px solid var(--green-bd);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 12px 0;
+  }
+  .tip strong {
+    font-family:'Lato',sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--green-tx);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .tip p { margin: 0; font-size: 9.5pt; }
+  .warn {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-bd);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 12px 0;
+  }
+  .warn strong {
+    font-family:'Lato',sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--warn-tx);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .warn p { margin: 0; font-size: 9.5pt; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 18px; margin: 12px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 12px; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -17px; top: 4px;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .tl-period {
+    font-family:'Lato',sans-serif;
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 2px;
+  }
+  .tl-desc { font-size: 9.5pt; line-height: 1.65; margin: 0; }
+
+  /* Índice */
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 10pt;
+  }
+  .toc-item span { color: var(--light); font-size: 9pt; }
+
+  /* Rodapé de página */
+  .page-footer {
+    margin-top: auto;
+    padding-top: 10mm;
+    border-top: 1px solid var(--border);
+    font-family:'Lato',sans-serif;
+    font-size: 7.5pt;
+    color: var(--border);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* Oculta na tela mas mostra na impressão */
+  @media screen {
+    body { padding: 20px 0; }
+    .page {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      margin-bottom: 24px;
+    }
+  }
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ CAPA ══ -->
+<div class="page cover" data-num="1">
+  <div class="cover-inner">
+    <div class="cover-leaf">🌿</div>
+    <div class="cover-eyebrow">Guia Completo</div>
+    <h1 class="cover-title">Pós Mounjaro:<br>Sua Jornada de<br>Transformação</h1>
+    <p class="cover-sub">Tudo o que você precisa saber para viver bem durante e após o tratamento com Mounjaro.</p>
+    <div class="cover-rule"></div>
+    <div class="cover-author">Guia Prático em Português Brasileiro</div>
+  </div>
+</div>
+
+<!-- ══ ÍNDICE ══ -->
+<div class="page" data-num="2">
+  <div class="eyebrow">Sumário</div>
+  <h1>Índice</h1>
+  <div class="rule"></div>
+  <div class="toc-item">Introdução <span>3</span></div>
+  <div class="toc-item">Cap. 1 — O Que É o Mounjaro e Como Ele Age no Corpo <span>4</span></div>
+  <div class="toc-item">Cap. 2 — Os Primeiros Dias: O Que Esperar <span>5</span></div>
+  <div class="toc-item">Cap. 3 — Alimentação no Pós-Mounjaro <span>6</span></div>
+  <div class="toc-item">Cap. 4 — Hidratação e Suplementação <span>7</span></div>
+  <div class="toc-item">Cap. 5 — Efeitos Colaterais: Como Gerenciar <span>8</span></div>
+  <div class="toc-item">Cap. 6 — Exercícios Físicos Durante o Tratamento <span>9</span></div>
+  <div class="toc-item">Cap. 7 — Saúde Mental e Autoestima <span>10</span></div>
+  <div class="toc-item">Cap. 8 — Resultados e Linha do Tempo <span>11</span></div>
+  <div class="toc-item">Cap. 9 — Dicas para Potencializar os Resultados <span>12</span></div>
+  <div class="toc-item">Cap. 10 — Manutenção a Longo Prazo <span>13</span></div>
+  <div class="toc-item">Cap. 11 — A Saúde da Pele: Flacidez e Colágeno <span>14</span></div>
+  <div class="toc-item">Cap. 12 — Receitas Práticas: O Prato Perfeito <span>15</span></div>
+  <div class="toc-item">Cap. 13 — Eventos Sociais e Restaurantes <span>16</span></div>
+  <div class="toc-item">Cap. 14 — Quando o Peso Para de Cair: Quebrando o Platô <span>17</span></div>
+  <div class="toc-item">Cap. 15 — Sono, Estresse e Hormônios <span>18</span></div>
+  <div class="toc-item">Cap. 16 — Relacionamentos e a Nova Imagem Corporal <span>19</span></div>
+  <div class="toc-item">Cap. 17 — Mulheres e o Mounjaro <span>20</span></div>
+  <div class="toc-item">Cap. 18 — Custos, Logística e Continuidade <span>21</span></div>
+  <div class="toc-item">Cap. 19 — Perguntas Frequentes <span>22</span></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ INTRODUÇÃO ══ -->
+<div class="page" data-num="3">
+  <div class="eyebrow">Introdução</div>
+  <h1>Por Que Este Ebook?</h1>
+  <div class="rule"></div>
+  <p>Iniciar o tratamento com Mounjaro é um momento de esperança e, ao mesmo tempo, de muitas perguntas. O que vai mudar no meu corpo? O que posso comer? Como lidar com os efeitos colaterais? Quantos quilos vou perder?</p>
+  <p>A verdade é que cada pessoa tem uma experiência única. Mas existem padrões, dicas e estratégias que funcionam para a maioria das pessoas — e é exatamente isso que você vai encontrar aqui.</p>
+  <p>O Mounjaro (tirzepatida) é uma das medicações mais eficazes disponíveis atualmente para o tratamento da obesidade. Ele age de forma dupla no organismo, simulando dois hormônios naturais — GIP e GLP-1 — que regulam o apetite, a glicemia e o metabolismo.</p>
+  <div class="highlight">"O remédio é uma ferramenta poderosa. Mas o que você faz com ele — como se alimenta, como se move, como cuida da sua mente — é o que determina o resultado a longo prazo."</div>
+  <p>Neste ebook, vamos percorrer juntos cada etapa da sua jornada: dos primeiros dias de tratamento à manutenção dos resultados. Prepare-se para se conhecer melhor e construir hábitos que durem para sempre.</p>
+  <div class="tip"><strong>💡 Importante</strong><p>Este material tem caráter informativo e não substitui a orientação do seu médico ou nutricionista. Sempre consulte seu profissional de saúde antes de fazer alterações no tratamento.</p></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 1 ══ -->
+<div class="page" data-num="4">
+  <div class="chapter-num">01</div>
+  <div class="eyebrow">Capítulo 1</div>
+  <h1>O Que É o Mounjaro e Como Ele Age no Corpo</h1>
+  <div class="rule"></div>
+  <p>O Mounjaro é o nome comercial da <strong>tirzepatida</strong>, uma medicação injetável semanal aprovada para o tratamento do diabetes tipo 2 e da obesidade. Diferente de outras medicações similares, a tirzepatida age em dois receptores ao mesmo tempo: o do GLP-1 e o do GIP.</p>
+  <h2>O que são GLP-1 e GIP?</h2>
+  <p>GLP-1 e GIP são hormônios produzidos naturalmente pelo intestino após as refeições. Eles enviam sinais ao cérebro indicando que você está satisfeito, diminuem a produção de glucagon e retardam o esvaziamento gástrico.</p>
+  <div class="tip"><strong>⚙️ Como funciona na prática</strong><p>Com o Mounjaro, seu cérebro recebe o sinal de saciedade muito mais rapidamente. Você se satisfaz com porções menores e sente menos vontade de beliscar entre as refeições.</p></div>
+  <h2>Principais efeitos do Mounjaro</h2>
+  <ul>
+    <li><strong>Redução significativa do apetite</strong> — menos fome ao longo do dia.</li>
+    <li><strong>Saciedade prolongada</strong> — as refeições duram mais tempo.</li>
+    <li><strong>Controle da glicemia</strong> — importante para diabéticos e pré-diabéticos.</li>
+    <li><strong>Perda de peso</strong> — estudos mostram redução de 15% a 22% do peso corporal.</li>
+    <li><strong>Melhora de marcadores metabólicos</strong> — colesterol, triglicerídeos e pressão arterial.</li>
+  </ul>
+  <div class="highlight">"Entender como o medicamento funciona ajuda você a trabalhar com ele, e não contra ele."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 2 ══ -->
+<div class="page" data-num="5">
+  <div class="chapter-num">02</div>
+  <div class="eyebrow">Capítulo 2</div>
+  <h1>Os Primeiros Dias: O Que Esperar</h1>
+  <div class="rule"></div>
+  <p>Os primeiros dias após a primeira aplicação do Mounjaro costumam ser os mais desafiadores — e também os mais surpreendentes. O corpo está se adaptando a uma nova sinalização hormonal.</p>
+  <h2>O que pode acontecer na primeira semana</h2>
+  <ul>
+    <li><strong>Náusea leve a moderada</strong> — o efeito mais comum, especialmente após as primeiras doses.</li>
+    <li><strong>Redução abrupta do apetite</strong> — você pode não sentir fome e precisar se lembrar de comer.</li>
+    <li><strong>Alterações no trânsito intestinal</strong> — constipação ou diarreia são comuns no início.</li>
+    <li><strong>Cansaço</strong> — o corpo gastando energia para se adaptar.</li>
+    <li><strong>Arrotos frequentes</strong> — o esvaziamento gástrico mais lento pode causar isso.</li>
+  </ul>
+  <div class="warn"><strong>⚠️ Atenção</strong><p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Esses sintomas podem indicar necessidade de ajuste na dose.</p></div>
+  <h2>Estratégias para os primeiros dias</h2>
+  <ul>
+    <li>Faça refeições pequenas e frequentes.</li>
+    <li>Evite alimentos gordurosos e ultraprocessados.</li>
+    <li>Beba água em pequenos goles ao longo do dia.</li>
+    <li>Aplique o Mounjaro em dias em que você puder descansar se necessário.</li>
+    <li>Não pule refeições mesmo sem fome — o corpo precisa de combustível.</li>
+  </ul>
+  <div class="highlight">"O desconforto inicial é temporário. A maioria das pessoas reporta que os efeitos colaterais diminuem significativamente após as primeiras semanas."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 3 ══ -->
+<div class="page" data-num="6">
+  <div class="chapter-num">03</div>
+  <div class="eyebrow">Capítulo 3</div>
+  <h1>Alimentação no Pós-Mounjaro</h1>
+  <div class="rule"></div>
+  <p>O Mounjaro reduz o apetite, mas não garante automaticamente uma alimentação saudável. O que você come continua sendo fundamental para que a perda de peso seja feita com qualidade — preservando massa muscular e garantindo todos os nutrientes necessários.</p>
+  <h2>Priorize proteínas em cada refeição</h2>
+  <ul>
+    <li>Frango, peixe, ovos, carne magra</li>
+    <li>Leguminosas: feijão, lentilha, grão-de-bico</li>
+    <li>Laticínios: iogurte grego, queijo cottage, ricota</li>
+    <li>Tofu e tempeh (para quem prefere opções vegetais)</li>
+  </ul>
+  <div class="tip"><strong>🥗 Meta de proteína</strong><p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal para você.</p></div>
+  <h2>Alimentos que pioram os efeitos colaterais</h2>
+  <ul>
+    <li>Alimentos muito gordurosos (frituras, fast food)</li>
+    <li>Bebidas gaseificadas e alcoólicas</li>
+    <li>Refeições muito volumosas de uma só vez</li>
+    <li>Alimentos com muito açúcar refinado</li>
+  </ul>
+  <div class="highlight">"O Mounjaro faz o trabalho de reduzir a fome. Você faz o trabalho de escolher alimentos que nutrem o seu corpo."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 4 ══ -->
+<div class="page" data-num="7">
+  <div class="chapter-num">04</div>
+  <div class="eyebrow">Capítulo 4</div>
+  <h1>Hidratação e Suplementação</h1>
+  <div class="rule"></div>
+  <p>Com o apetite reduzido, muitas pessoas também acabam reduzindo a ingestão de líquidos sem perceber. A hidratação adequada é essencial durante o tratamento — tanto para o bem-estar geral quanto para minimizar efeitos colaterais.</p>
+  <div class="tip"><strong>💧 Meta de hidratação</strong><p>Beba entre 2 e 2,5 litros de líquidos por dia. Prefira água, chás sem açúcar e água de coco. Coloque lembretes no celular para não esquecer.</p></div>
+  <h2>Suplementação mais recomendada</h2>
+  <ul>
+    <li><strong>Vitamina B12</strong> — essencial para o sistema nervoso.</li>
+    <li><strong>Vitamina D + Cálcio</strong> — saúde óssea durante a perda de peso.</li>
+    <li><strong>Ferro</strong> — especialmente para mulheres em idade fértil.</li>
+    <li><strong>Magnésio</strong> — pode ajudar com constipação e câimbras.</li>
+    <li><strong>Proteína em pó (Whey ou Vegetal)</strong> — quando difícil atingir a meta por alimentação.</li>
+  </ul>
+  <div class="warn"><strong>⚠️ Não suplementar por conta própria</strong><p>Antes de iniciar qualquer suplementação, peça exames de sangue ao seu médico. Suplementar sem necessidade pode ser prejudicial.</p></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 5 ══ -->
+<div class="page" data-num="8">
+  <div class="chapter-num">05</div>
+  <div class="eyebrow">Capítulo 5</div>
+  <h1>Efeitos Colaterais: Como Gerenciar</h1>
+  <div class="rule"></div>
+  <p>Os efeitos colaterais do Mounjaro são, na maioria das vezes, transitórios. Eles tendem a ser mais intensos nas primeiras semanas e diminuem conforme o corpo se adapta à medicação.</p>
+  <h2>Náusea — o mais comum</h2>
+  <p>Afeta cerca de 30% dos usuários. Para aliviar: coma devagar, evite alimentos gordurosos, consuma gengibre em chá ou cápsulas e evite deitar logo após comer.</p>
+  <h2>Constipação</h2>
+  <p>O esvaziamento gástrico mais lento pode reduzir a frequência das evacuações. Aumente fibras, beba mais água e faça caminhadas leves após as refeições.</p>
+  <h2>Diarreia</h2>
+  <p>Mais rara, mas possível. Evite alimentos gordurosos ou condimentados e mantenha boa hidratação. Geralmente passa em alguns dias.</p>
+  <div class="tip"><strong>🍵 Aliados naturais</strong><p>Gengibre, hortelã, camomila e erva-cidreira podem ajudar a aliviar desconfortos gastrointestinais de forma segura.</p></div>
+  <h2>Fadiga</h2>
+  <p>O cansaço nas primeiras semanas é resultado da adaptação metabólica. Garanta sono adequado, proteína suficiente e boa hidratação — melhora com o tempo.</p>
+  <div class="highlight">"Conhecer os efeitos colaterais antecipadamente reduz a ansiedade e aumenta a adesão ao tratamento."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 6 ══ -->
+<div class="page" data-num="9">
+  <div class="chapter-num">06</div>
+  <div class="eyebrow">Capítulo 6</div>
+  <h1>Exercícios Físicos Durante o Tratamento</h1>
+  <div class="rule"></div>
+  <p>O exercício físico é um dos pilares mais importantes para potencializar os resultados do Mounjaro. Enquanto a medicação reduz o apetite, a atividade física garante que você perca gordura — e não músculo.</p>
+  <h2>Por que o exercício é tão importante?</h2>
+  <ul>
+    <li>Preserva e aumenta a massa muscular durante a perda de peso.</li>
+    <li>Acelera o metabolismo basal.</li>
+    <li>Melhora a sensibilidade à insulina.</li>
+    <li>Reduz ansiedade e melhora o humor.</li>
+    <li>Contribui para a manutenção do peso a longo prazo.</li>
+  </ul>
+  <div class="tip"><strong>🏃 Recomendação mínima</strong><p>150 minutos de atividade moderada por semana (OMS). Isso equivale a 30 minutos de caminhada rápida, 5 dias por semana.</p></div>
+  <h2>Qual tipo de exercício é melhor?</h2>
+  <p><strong>Musculação / Treinamento de força</strong> é o mais recomendado durante o uso do Mounjaro, pois é o que mais protege a massa muscular. Combinado com exercício aeróbico, os resultados são ainda melhores.</p>
+  <h2>Cuidados</h2>
+  <ul>
+    <li>Não treine em jejum prolongado — coma algo leve antes.</li>
+    <li>Hidrate-se muito bem durante e após os exercícios.</li>
+    <li>Comece devagar e aumente a intensidade gradualmente.</li>
+  </ul>
+  <div class="highlight">"Consistência bate intensidade. O hábito é mais importante do que a performance."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 7 ══ -->
+<div class="page" data-num="10">
+  <div class="chapter-num">07</div>
+  <div class="eyebrow">Capítulo 7</div>
+  <h1>Saúde Mental e Autoestima</h1>
+  <div class="rule"></div>
+  <p>A jornada com o Mounjaro não é apenas física. A relação com o próprio corpo, com a comida e com a autoimagem passa por transformações profundas durante o tratamento. Cuidar da saúde mental é tão importante quanto seguir a alimentação correta.</p>
+  <h2>A relação com a comida muda</h2>
+  <p>Muitas pessoas descobrem, com a redução do apetite, que usavam a comida como fonte de conforto emocional. Quando o Mounjaro "silencia" a fome física, a fome emocional pode se tornar mais evidente.</p>
+  <div class="highlight">"Você não está com fome de comida — você está com fome de algo mais. Identifique o que é e encontre outras formas de nutri-lo."</div>
+  <h2>Autoestima e corpo em transformação</h2>
+  <ul>
+    <li>Celebre cada conquista, por menor que seja.</li>
+    <li>Não se compare com outros — cada corpo responde diferente.</li>
+    <li>Evite pesar-se obsessivamente — o peso varia dia a dia.</li>
+    <li>Busque apoio: amigos, grupos de suporte ou um psicólogo.</li>
+  </ul>
+  <div class="tip"><strong>🧠 Considere a terapia</strong><p>Muitas pessoas no tratamento com GLP-1 se beneficiam de acompanhamento psicológico para trabalhar a relação com a comida e o corpo. Não há fraqueza nisso — há sabedoria.</p></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 8 ══ -->
+<div class="page" data-num="11">
+  <div class="chapter-num">08</div>
+  <div class="eyebrow">Capítulo 8</div>
+  <h1>Resultados e Linha do Tempo</h1>
+  <div class="rule"></div>
+  <p>Uma das perguntas mais frequentes é: "Quando vou ver resultados?" A resposta honesta é: depende. Mas existe uma linha do tempo geral que a maioria das pessoas experimenta.</p>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-period">Semanas 1–4</div><p class="tl-desc">Adaptação ao medicamento. Efeitos colaterais mais comuns. Redução do apetite começa a aparecer. Perda inicial de 1 a 3 kg.</p></div>
+    <div class="tl-item"><div class="tl-period">Meses 2–3</div><p class="tl-desc">O corpo se adapta. Efeitos colaterais diminuem. Perda de peso mais consistente: 0,5 a 1 kg por semana.</p></div>
+    <div class="tl-item"><div class="tl-period">Meses 4–6</div><p class="tl-desc">Resultados visíveis e mensuráveis. Melhora nos exames. Roupas ficam largas. A maioria perde entre 10% e 15% do peso inicial.</p></div>
+    <div class="tl-item"><div class="tl-period">Mês 6 em diante</div><p class="tl-desc">Fase de consolidação. O ritmo pode desacelerar — isso é normal. Foco em manter os hábitos e preparar a manutenção.</p></div>
+  </div>
+  <div class="warn"><strong>⚠️ Platôs são normais</strong><p>Toda jornada tem platôs. Isso não significa que você parou de progredir. Confie no processo.</p></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 9 ══ -->
+<div class="page" data-num="12">
+  <div class="chapter-num">09</div>
+  <div class="eyebrow">Capítulo 9</div>
+  <h1>Dicas para Potencializar os Resultados</h1>
+  <div class="rule"></div>
+  <h2>1. Priorize o sono</h2>
+  <p>Dormir mal aumenta o cortisol, que estimula o acúmulo de gordura. Tente dormir entre 7 e 9 horas por noite.</p>
+  <h2>2. Gerencie o estresse</h2>
+  <p>Estresse crônico sabota o emagrecimento. Práticas como meditação, respiração profunda e yoga ajudam a regular o cortisol.</p>
+  <h2>3. Não pule refeições</h2>
+  <p>Mesmo sem fome, comer de 3 a 4 vezes ao dia mantém o metabolismo ativo e evita episódios de comer demais.</p>
+  <h2>4. Registre seu progresso</h2>
+  <p>Tire fotos mensais, anote medidas e registre como você se sente. A balança nem sempre reflete todo o progresso real.</p>
+  <h2>5. Mantenha o acompanhamento médico</h2>
+  <p>Consultas regulares permitem ajuste de dose, monitoramento de exames e suporte para desafios que surgem ao longo do caminho.</p>
+  <h2>6. Celebre cada conquista</h2>
+  <ul>
+    <li>Subiu um andar de escada sem se cansar? Conquista!</li>
+    <li>Passou uma semana seguindo a alimentação? Conquista!</li>
+    <li>Dormiu 8 horas? Conquista!</li>
+  </ul>
+  <div class="highlight">"Pequenas vitórias acumuladas constroem grandes transformações."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 10 ══ -->
+<div class="page" data-num="13">
+  <div class="chapter-num">10</div>
+  <div class="eyebrow">Capítulo 10</div>
+  <h1>Manutenção a Longo Prazo</h1>
+  <div class="rule"></div>
+  <p>Atingir o peso desejado é uma conquista enorme. Mas o verdadeiro desafio é manter os resultados. Os hábitos que você construiu durante o tratamento são o seu maior aliado nessa fase.</p>
+  <h2>O que acontece quando o Mounjaro é suspenso?</h2>
+  <p>Estudos mostram que, sem mudanças de estilo de vida, parte do peso pode retornar após a suspensão do medicamento. O corpo tem memória metabólica e tende a querer retornar ao peso anterior.</p>
+  <div class="highlight">"O Mounjaro cria a janela de oportunidade. Os hábitos que você construiu nessa janela são o que mantém os resultados quando ela se fecha."</div>
+  <h2>Pilares da manutenção</h2>
+  <ul>
+    <li><strong>Alimentação consistente</strong> — não precisa ser perfeita, mas precisa ser consistente.</li>
+    <li><strong>Atividade física regular</strong> — especialmente treino de força.</li>
+    <li><strong>Monitoramento leve</strong> — verificar o peso uma vez por semana.</li>
+    <li><strong>Sono e controle do estresse</strong> — continuam sendo fundamentais.</li>
+    <li><strong>Acompanhamento médico</strong> — o médico decidirá sobre redução ou manutenção da dose.</li>
+  </ul>
+  <div class="tip"><strong>📅 Regra dos 5 kg</strong><p>Se o peso aumentar mais de 5 kg do patamar atingido, retorne imediatamente ao seu médico para avaliar o plano de manutenção.</p></div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 11 ══ -->
+<div class="page" data-num="14">
+  <div class="chapter-num">11</div>
+  <div class="eyebrow">Capítulo 11</div>
+  <h1>A Saúde da Pele: Flacidez e Colágeno</h1>
+  <div class="rule"></div>
+  <p>Uma das maiores preocupações de quem emagrece rapidamente é a flacidez. Com o Mounjaro proporcionando perdas expressivas de peso em pouco tempo, a pele precisa de atenção redobrada.</p>
+  <h2>Por que a flacidez acontece?</h2>
+  <p>A pele é elástica, mas tem limites. Quando perde volume rapidamente, ela não consegue se retrair na mesma velocidade. Quanto mais rápida a perda, maior o risco — especialmente em braços, abdômen, coxas e pescoço.</p>
+  <div class="tip"><strong>💡 Boa notícia</strong><p>A pele continua se adaptando por meses após a perda de peso. Muitas pessoas veem melhora significativa com o tempo, especialmente combinando nutrição, exercícios e cuidados tópicos.</p></div>
+  <h2>O que realmente ajuda</h2>
+  <ul>
+    <li><strong>Proteína adequada</strong> — o colágeno é uma proteína. Sem aminoácidos suficientes, o corpo não produz fibras elásticas novas.</li>
+    <li><strong>Colágeno hidrolisado</strong> — 10–15g/dia têm evidências de melhora na elasticidade.</li>
+    <li><strong>Vitamina C</strong> — cofator essencial para a síntese de colágeno.</li>
+    <li><strong>Treino de força</strong> — aumenta o volume muscular embaixo da pele.</li>
+    <li><strong>Hidratação da pele</strong> — cremes com retinol, ácido hialurônico e vitamina E.</li>
+    <li><strong>Massagem e drenagem linfática</strong> — melhoram a circulação.</li>
+  </ul>
+  <div class="highlight">"A pele é resiliente. Dê a ela tempo, nutrição e estímulo muscular — ela vai te surpreender."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 12 ══ -->
+<div class="page" data-num="15">
+  <div class="chapter-num">12</div>
+  <div class="eyebrow">Capítulo 12</div>
+  <h1>Receitas Práticas: O Prato Perfeito Pós-Mounjaro</h1>
+  <div class="rule"></div>
+  <p>Com o apetite reduzido, cada refeição precisa ser densa em nutrientes. Não é sobre comer menos — é sobre comer melhor.</p>
+  <div class="tip"><strong>🥘 Estrutura de cada refeição</strong><p><strong>½ prato:</strong> vegetais variados · <strong>¼ prato:</strong> proteína · <strong>¼ prato:</strong> carboidrato complexo</p></div>
+  <h2>Ideias de refeições que funcionam</h2>
+  <ul>
+    <li><strong>Café da manhã:</strong> Iogurte grego com frutas vermelhas + whey + granola sem açúcar.</li>
+    <li><strong>Almoço:</strong> Frango grelhado com legumes no vapor + arroz integral + azeite.</li>
+    <li><strong>Lanche:</strong> Ovo cozido + fatia de queijo cottage + pepino em palitos.</li>
+    <li><strong>Jantar:</strong> Salmão assado com brócolis e purê de batata-doce.</li>
+    <li><strong>Ceia:</strong> Iogurte grego natural + colher de pasta de amendoim.</li>
+  </ul>
+  <h2>Snacks que salvam o dia</h2>
+  <ul>
+    <li>Castanhas (porção de 30g)</li>
+    <li>Queijo cottage com ervas</li>
+    <li>Edamame — prático e proteico</li>
+    <li>Atum com biscoito de arroz</li>
+  </ul>
+  <h2>O que evitar</h2>
+  <ul>
+    <li>Alimentos muito gordurosos — pioram a náusea.</li>
+    <li>Bebidas durante as refeições — ocupam espaço da comida.</li>
+    <li>Porções grandes de uma vez.</li>
+  </ul>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 13 ══ -->
+<div class="page" data-num="16">
+  <div class="chapter-num">13</div>
+  <div class="eyebrow">Capítulo 13</div>
+  <h1>Como se Virar em Eventos Sociais e Restaurantes</h1>
+  <div class="rule"></div>
+  <p>Festas, almoços em família, happy hours — a comida está em todo lugar. Com estratégia, você pode estar em qualquer lugar e continuar no caminho certo.</p>
+  <h2>No restaurante</h2>
+  <ul>
+    <li>Consulte o cardápio online antes de sair.</li>
+    <li>Peça meia-porção quando possível.</li>
+    <li>Prefira grelhados, assados ou cozidos no vapor.</li>
+    <li>Beba água antes de pedir.</li>
+    <li>Molhos e temperos à parte.</li>
+  </ul>
+  <h2>Em festas e confraternizações</h2>
+  <ul>
+    <li>Coma algo leve em casa antes de sair.</li>
+    <li>Fique perto dos legumes, frios e proteínas.</li>
+    <li>"Não, obrigado" é uma frase completa.</li>
+    <li>Alcoólicos com moderação: prefira vinho seco ou destilados puros.</li>
+  </ul>
+  <div class="tip"><strong>💬 Como lidar com os comentários</strong><p>"Você não vai comer mais nada?" — "Estou satisfeito(a), obrigado(a)!" Você não precisa explicar seu tratamento para ninguém.</p></div>
+  <h2>Em viagens</h2>
+  <p>Mantenha snacks proteicos na bolsa. Pesquise restaurantes no destino com antecedência. Em hotéis, monte um café da manhã equilibrado no buffet.</p>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 14 ══ -->
+<div class="page" data-num="17">
+  <div class="chapter-num">14</div>
+  <div class="eyebrow">Capítulo 14</div>
+  <h1>Quando o Peso Para de Cair: Quebrando o Platô</h1>
+  <div class="rule"></div>
+  <p>A balança travou. Passaram semanas e o número não muda. Isso se chama <strong>platô</strong> — e é uma das fases mais frustrantes da jornada. Mas tem solução.</p>
+  <div class="warn"><strong>⚠️ O platô não é falha sua</strong><p>Não significa que você parou de fazer as coisas certas. É biologia. A chave é não desistir e fazer ajustes estratégicos.</p></div>
+  <h2>Estratégias para quebrar o platô</h2>
+  <ul>
+    <li><strong>Reavalie a ingestão calórica</strong> — com menos peso, o metabolismo mudou.</li>
+    <li><strong>Varie o treino</strong> — o corpo se adapta. Adicione um novo estímulo.</li>
+    <li><strong>Aumente as proteínas</strong> — efeito termogênico e proteção muscular.</li>
+    <li><strong>Refeed estratégico</strong> — um dia com mais carboidratos pode "reiniciar" o metabolismo.</li>
+    <li><strong>Priorize o sono</strong> — privação de sono bloqueia a perda de gordura.</li>
+    <li><strong>Converse com o médico</strong> — pode ser hora de ajustar a dose.</li>
+  </ul>
+  <h2>O que NÃO fazer no platô</h2>
+  <ul>
+    <li>Cortar calorias drasticamente — piora a adaptação metabólica.</li>
+    <li>Parar os exercícios — perde músculo e desacelera mais ainda.</li>
+    <li>Abandonar o tratamento — o platô é temporário.</li>
+  </ul>
+  <div class="highlight">"Um platô não é um sinal de parada. É o seu corpo pedindo um ajuste."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 15 ══ -->
+<div class="page" data-num="18">
+  <div class="chapter-num">15</div>
+  <div class="eyebrow">Capítulo 15</div>
+  <h1>Sono, Estresse e Hormônios: O Triângulo Invisível</h1>
+  <div class="rule"></div>
+  <p>Você pode fazer tudo certo e ainda assim ter dificuldade para emagrecer se ignorar esses três fatores. Sono, estresse e hormônios formam um triângulo invisível que governa boa parte do seu resultado.</p>
+  <h2>O que acontece quando você não dorme bem</h2>
+  <ul>
+    <li>O cortisol aumenta — favorece o acúmulo de gordura abdominal.</li>
+    <li>A grelina sobe — você sente mais fome mesmo com o Mounjaro.</li>
+    <li>A leptina cai — o cérebro não recebe o sinal de "cheio".</li>
+    <li>O GH é secretado principalmente durante o sono profundo — essencial para queimar gordura.</li>
+  </ul>
+  <div class="tip"><strong>🌙 Meta de sono</strong><p>7 a 9 horas por noite, com horário regular. Evite telas 1h antes de dormir.</p></div>
+  <h2>Como regular o eixo sono-estresse-hormônios</h2>
+  <ul>
+    <li>Rotina de sono consistente — mesmo nos fins de semana.</li>
+    <li>Meditação ou respiração profunda por 10 minutos ao dia.</li>
+    <li>Exposição ao sol pela manhã — regula o ritmo circadiano.</li>
+    <li>Evitar cafeína após as 14h.</li>
+  </ul>
+  <div class="highlight">"Dormir 8 horas não é preguiça — é protocolo de emagrecimento."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 16 ══ -->
+<div class="page" data-num="19">
+  <div class="chapter-num">16</div>
+  <div class="eyebrow">Capítulo 16</div>
+  <h1>Relacionamentos e a Nova Imagem Corporal</h1>
+  <div class="rule"></div>
+  <p>Emagrecer transforma não apenas o corpo — transforma também as relações. Algumas pessoas ficam animadas com sua mudança. Outras ficam desconfortáveis. E algumas podem, sem perceber, sabotar sua jornada.</p>
+  <h2>Por que algumas pessoas reagem mal</h2>
+  <p>Quando você muda, espelha nas outras pessoas o que elas não estão fazendo. Isso pode gerar comentários disfarçados de "preocupação" ou tentativas de te fazer sair do plano.</p>
+  <div class="warn"><strong>⚠️ Sabotagem emocional</strong><p>Nem sempre é intencional. Pessoas próximas podem inconscientemente te convidar para "sair da dieta". Reconheça os padrões sem julgamento — e mantenha o foco.</p></div>
+  <h2>Relacionamentos amorosos</h2>
+  <p>A perda de peso pode mudar a dinâmica do casal. Ganho de confiança, mais disposição, mais atenção de terceiros. Isso requer conversas abertas e honestas com o parceiro.</p>
+  <h2>A nova relação com você mesmo(a)</h2>
+  <ul>
+    <li>A imagem mental do corpo demora a acompanhar a imagem real — isso é normal.</li>
+    <li>Celebre conquistas não-visuais: disposição, saúde nos exames, autoconfiança.</li>
+  </ul>
+  <div class="highlight">"Você não deve satisfação a ninguém sobre as escolhas do seu corpo. Transformação é um ato de amor-próprio."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 17 ══ -->
+<div class="page" data-num="20">
+  <div class="chapter-num">17</div>
+  <div class="eyebrow">Capítulo 17</div>
+  <h1>Mulheres e o Mounjaro: Ciclo, Menopausa e Especificidades</h1>
+  <div class="rule"></div>
+  <p>A maioria das pessoas que usam Mounjaro para emagrecimento são mulheres — e o corpo feminino tem particularidades hormonais que afetam diretamente o resultado do tratamento.</p>
+  <h2>O ciclo menstrual e o peso</h2>
+  <p>É normal o peso variar de 1 a 3 kg ao longo do ciclo menstrual devido à retenção hídrica. Não entre em pânico com a balança nessa semana — essa variação não é gordura.</p>
+  <div class="tip"><strong>📅 Dica do ciclo</strong><p>Pese-se sempre no mesmo dia da semana, preferencialmente logo após a menstruação, quando a retenção hídrica é menor.</p></div>
+  <h2>SOP (Síndrome do Ovário Policístico)</h2>
+  <p>Mulheres com SOP têm resistência à insulina aumentada. O Mounjaro, ao melhorar a sensibilidade à insulina, pode ser especialmente benéfico para esse grupo.</p>
+  <h2>Menopausa e pré-menopausa</h2>
+  <p>A queda do estrogênio favorece o acúmulo de gordura abdominal. Estratégias adicionais:</p>
+  <ul>
+    <li>Mais treino de força (protege ossos e músculo).</li>
+    <li>Avaliação de terapia hormonal com ginecologista.</li>
+    <li>Atenção redobrada ao cálcio e vitamina D.</li>
+    <li>Gerenciamento do estresse.</li>
+  </ul>
+  <div class="highlight">"O corpo feminino é complexo e poderoso. Entender suas fases não é desculpa — é estratégia."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 18 ══ -->
+<div class="page" data-num="21">
+  <div class="chapter-num">18</div>
+  <div class="eyebrow">Capítulo 18</div>
+  <h1>Custos, Logística e Continuidade do Tratamento</h1>
+  <div class="rule"></div>
+  <p>O Mounjaro é um medicamento de alto custo, e planejar financeiramente o tratamento é tão importante quanto seguir o plano alimentar.</p>
+  <div class="tip"><strong>💊 Dica de compra</strong><p>Compare preços em farmácias de manipulação e lojas físicas. Algumas redes têm programas de fidelidade. O programa de apoio ao paciente da fabricante também pode oferecer descontos.</p></div>
+  <h2>Logística das aplicações</h2>
+  <ul>
+    <li><strong>Aplicação semanal</strong> — crie um dia fixo e coloque um alarme recorrente.</li>
+    <li><strong>Armazenamento</strong> — refrigerado entre 2°C e 8°C. Pode ficar fora da geladeira por até 21 dias (até 30°C).</li>
+    <li><strong>Transporte</strong> — em viagens, use bolsas térmicas com gelo reutilizável. Não congele.</li>
+    <li><strong>Descarte</strong> — descarte em coletores de materiais perfurocortantes.</li>
+  </ul>
+  <h2>Como manter a continuidade</h2>
+  <ul>
+    <li>Agende as consultas médicas com antecedência.</li>
+    <li>Mantenha sempre uma aplicação de reserva.</li>
+    <li>Comunique seu médico se precisar pausar — há alternativas.</li>
+  </ul>
+  <div class="highlight">"Investir na sua saúde agora reduz custos com médicos e internações no futuro."</div>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ CAP 19 — FAQ ══ -->
+<div class="page" data-num="22">
+  <div class="chapter-num">19</div>
+  <div class="eyebrow">Capítulo 19</div>
+  <h1>Perguntas Frequentes</h1>
+  <div class="rule"></div>
+  <p><strong>Posso tomar o Mounjaro sem dieta?</strong><br>Tecnicamente sim, mas os resultados serão muito menores. O Mounjaro potencializa uma alimentação equilibrada.</p>
+  <p><strong>Quanto tempo leva para fazer efeito?</strong><br>A redução do apetite começa nas primeiras semanas, mas a perda de peso expressiva aparece a partir do segundo mês.</p>
+  <p><strong>Posso beber álcool durante o tratamento?</strong><br>Não é formalmente contraindicado, mas pode piorar os efeitos gastrointestinais. Se consumir, faça com muita moderação.</p>
+  <p><strong>O que fazer se esquecer de aplicar a dose?</strong><br>Se lembrar até 4 dias após o dia habitual, aplique assim que possível. Nunca aplique duas doses na mesma semana.</p>
+  <p><strong>O Mounjaro causa queda de cabelo?</strong><br>Não diretamente, mas pode acontecer como consequência da perda de peso rápida (eflúvio telógeno). Geralmente temporário.</p>
+  <p><strong>Posso usar Mounjaro se não sou diabético?</strong><br>Sim. O Mounjaro é aprovado para tratamento da obesidade independentemente do diagnóstico de diabetes.</p>
+  <p><strong>Posso praticar exercícios no dia da aplicação?</strong><br>Não há contraindicação formal. Observe como seu corpo reage e adapte sua rotina conforme necessário.</p>
+  <div class="page-footer">Pós Mounjaro — Guia Completo · Uso pessoal</div>
+</div>
+
+<!-- ══ ENCERRAMENTO ══ -->
+<div class="page" data-num="23">
+  <div class="eyebrow">Conclusão</div>
+  <h1>Você Chegou ao Final</h1>
+  <div class="rule"></div>
+  <p>Parabéns por chegar até aqui. Isso já é uma vitória — demonstra comprometimento com a sua saúde e com o seu futuro.</p>
+  <p>Ao longo deste guia você aprendeu sobre o funcionamento do Mounjaro, como gerenciar os efeitos colaterais, alimentar-se de forma estratégica, exercitar-se para preservar músculo, cuidar da saúde mental, quebrar platôs, manter os resultados e muito mais.</p>
+  <div class="highlight">"A jornada de transformação não termina quando você fecha este livro. Ela está apenas começando. O conhecimento que você adquiriu aqui é o seu maior aliado."</div>
+  <p>Lembre-se sempre:</p>
+  <ul>
+    <li>O Mounjaro é uma ferramenta — os hábitos são a fundação.</li>
+    <li>Consistência supera perfeição.</li>
+    <li>Cada pessoa tem seu próprio ritmo — respeite o seu.</li>
+    <li>Cuide sempre da sua saúde com orientação profissional.</li>
+  </ul>
+  <div style="text-align:center; margin-top:auto; padding-top:20mm;">
+    <div style="font-size:32pt; margin-bottom:8mm;">🌿</div>
+    <div style="font-family:'Lato',sans-serif; font-size:9pt; color:#8b6914; letter-spacing:0.12em; text-transform:uppercase; font-weight:700;">Pós Mounjaro</div>
+    <div style="font-family:'Lato',sans-serif; font-size:8pt; color:#d9cdb0; margin-top:4px;">Guia Completo · Português Brasileiro</div>
+    <div style="font-family:'Lato',sans-serif; font-size:7.5pt; color:#d9cdb0; margin-top:6px;">Este material tem caráter informativo e não substitui orientação médica profissional.</div>
+  </div>
+</div>
+
+</body>
+</html>
