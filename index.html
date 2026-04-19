@@ -20,7 +20,7 @@
   --shadow: rgba(100, 75, 20, 0.18);
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-sans: 'Segoe UI', Arial, sans-serif;
-  --font-size: 18px;
+  --font-size: 16px;
   --radius: 10px;
 }
 
@@ -311,7 +311,7 @@ h1.page-title {
 p { line-height: 1.75; margin-bottom: 0.75em; color: var(--text); }
 h2.section-heading { font-size: 1rem; color: var(--accent); margin: 14px 0 6px; font-style: italic; }
 ul.content-list, ol.content-list { padding-left: 1.4em; margin-bottom: 1.1em; }
-ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em; }
+ul.content-list li, ol.content-list li { line-height: 1.65; margin-bottom: 0.18em; }
 .highlight-box {
   background: var(--accent-pale);
   border-left: 4px solid var(--accent);
@@ -547,6 +547,18 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
   .cover-subtitle { font-size: 0.9rem; }
 }
 
+/* Fade suave no rodapé da página — mascara cortes */
+.page::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 36px;
+  background: linear-gradient(transparent, var(--page-bg));
+  pointer-events: none;
+  z-index: 5;
+}
+.cover-page::after { display: none; }
+
 /* Flash de zona ao clicar na folha */
 @keyframes zoneFlash {
   0%   { opacity: 1; }
@@ -684,10 +696,6 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <li><strong>Cansaço</strong> — o corpo gastando energia para se adaptar.</li>
       <li><strong>Arrotos frequentes</strong> — o esvaziamento gástrico mais lento pode causar isso.</li>
     </ul>
-    <div class="warning-box">
-      <strong>⚠️ Atenção</strong>
-      <p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Podem indicar necessidade de ajuste na dose.</p>
-    </div>
   </div>
 
   <!-- PAGE 7: Cap 2 — Parte 2 -->
@@ -695,7 +703,11 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">02</div>
     <div class="page-eyebrow">Capítulo 2 — continuação</div>
-    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Estratégias para os primeiros dias</h2>
+    <div class="warning-box" style="margin-bottom:10px;">
+      <strong>⚠️ Atenção</strong>
+      <p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Podem indicar necessidade de ajuste na dose.</p>
+    </div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.05rem;font-style:normal;font-weight:700;">Estratégias para os primeiros dias</h2>
     <div class="title-rule"></div>
     <ul class="content-list">
       <li>Faça refeições pequenas e frequentes.</li>
@@ -718,25 +730,25 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <div class="title-rule"></div>
     <p>O Mounjaro reduz o apetite, mas não garante automaticamente uma alimentação saudável. O que você come continua sendo fundamental para que a perda de peso seja feita com qualidade — preservando massa muscular e garantindo todos os nutrientes necessários.</p>
     <h2 class="section-heading">Priorize proteínas em cada refeição</h2>
-    <p>Com o apetite reduzido, há risco de comer menos proteína do que o necessário, levando à perda de massa muscular. Procure incluir em cada refeição:</p>
+    <p>Com o apetite reduzido, há risco de comer menos proteína do que o necessário. Procure incluir em cada refeição:</p>
     <ul class="content-list">
       <li>Frango, peixe, ovos, carne magra</li>
       <li>Leguminosas: feijão, lentilha, grão-de-bico</li>
       <li>Laticínios: iogurte grego, queijo cottage, ricota</li>
-      <li>Tofu e tempeh (para quem prefere opções vegetais)</li>
+      <li>Tofu e tempeh (para opções vegetais)</li>
     </ul>
-    <div class="tip-box">
-      <strong>🥗 Meta de proteína</strong>
-      <p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal.</p>
-    </div>
   </div>
 
   <!-- PAGE 9: Cap 3 — Parte 2 -->
-  <div class="page" data-page="9" data-title="Cap. 3 — Alimentos a Evitar">
+  <div class="page" data-page="9" data-title="Cap. 3 — Proteína e Alimentos a Evitar">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">03</div>
     <div class="page-eyebrow">Capítulo 3 — continuação</div>
-    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Alimentos que pioram os efeitos colaterais</h2>
+    <div class="tip-box" style="margin-bottom:10px;">
+      <strong>🥗 Meta de proteína</strong>
+      <p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal.</p>
+    </div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.05rem;font-style:normal;font-weight:700;">Alimentos que pioram os efeitos colaterais</h2>
     <div class="title-rule"></div>
     <ul class="content-list">
       <li>Alimentos muito gordurosos (frituras, fast food)</li>
@@ -1455,7 +1467,9 @@ let pageFlip;
 
 function init() {
   current   = parseInt(localStorage.getItem(LS_PAGE)) || 1;
-  fontSize  = parseInt(localStorage.getItem(LS_FONT)) || 18;
+  fontSize  = parseInt(localStorage.getItem(LS_FONT)) || 16;
+  /* Reset se vier o padrão antigo (18px) sem escolha manual */
+  if (fontSize === 18 && !localStorage.getItem(LS_FONT)) fontSize = 16;
   lidas     = new Set(JSON.parse(localStorage.getItem(LS_LIDAS) || '[]'));
   respostas = JSON.parse(localStorage.getItem(LS_RESP) || '{}');
   document.documentElement.style.setProperty('--font-size', fontSize + 'px');
