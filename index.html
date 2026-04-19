@@ -411,19 +411,25 @@ ul.content-list li, ol.content-list li { line-height: 1.65; margin-bottom: 0.18e
   background: var(--page-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 18px;
-  margin-bottom: 14px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
 }
 .summary-section h3 {
   font-family: var(--font-sans);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
 }
-.summary-section p { margin: 0; font-size: 0.93rem; }
+.summary-section p { margin: 0; font-size: 0.88rem; line-height: 1.6; }
+
+/* Página de resumo: permite scroll pois conteúdo é dinâmico */
+.page[data-page="42"] {
+  overflow-y: auto;
+}
+.page[data-page="42"]::after { display: none; }
 
 /* ── Timeline ── */
 .timeline { position: relative; padding-left: 28px; margin: 14px 0; }
@@ -1402,11 +1408,11 @@ ul.content-list li, ol.content-list li { line-height: 1.65; margin-bottom: 0.18e
     <div id="summary-content">
       <p style="color:var(--text-light);font-style:italic;">Responda às perguntas interativas nos Capítulos 5 e 8 para receber seu resumo personalizado aqui!</p>
     </div>
-    <div class="highlight-box" style="margin-top:28px;">
+    <div class="highlight-box" style="margin-top:14px;">
       "Você chegou ao final deste ebook. Isso já é uma vitória — mostra comprometimento com a sua saúde e com o seu futuro. Continue assim."
     </div>
-    <div style="text-align:center;margin-top:28px;padding-top:22px;border-top:1px solid var(--border);">
-      <div style="font-size:2rem;margin-bottom:10px;">🌿</div>
+    <div style="text-align:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+      <div style="font-size:1.6rem;margin-bottom:8px;">🌿</div>
       <div style="font-family:var(--font-sans);font-size:0.75rem;color:var(--text-light);letter-spacing:0.09em;text-transform:uppercase;">Pós Mounjaro — Guia Completo</div>
       <div style="font-family:var(--font-sans);font-size:0.68rem;color:var(--border);margin-top:5px;">Cuide-se sempre com orientação profissional.</div>
     </div>
