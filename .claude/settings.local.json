@@ -5,7 +5,9 @@
       "Bash(vercel --version)",
       "Bash(npx vercel *)",
       "Read(//c/Users/Joaryan/**)",
-      "Read(//c/Users/Joaryan/.vercel/**)"
+      "Read(//c/Users/Joaryan/.vercel/**)",
+      "Bash(copy \"C:\\\\Users\\\\Joaryan\\\\Downloads\\\\ebook pós monjauro\\\\ebook-pos-mounjaro.html\" \"C:\\\\Users\\\\Joaryan\\\\Downloads\\\\ebook pós monjauro\\\\index.html\")",
+      "Bash(cmd.exe /c copy \"C:\\\\Users\\\\Joaryan\\\\Downloads\\\\ebook pos monjauro\\\\ebook-pos-mounjaro.html\" \"C:\\\\Users\\\\Joaryan\\\\Downloads\\\\ebook pos monjauro\\\\index.html\")"
     ]
   }
 }

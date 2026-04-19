@@ -213,8 +213,7 @@ body {
   padding: 44px 48px 40px;
   position: relative;
   background: var(--page-bg);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   box-sizing: border-box;
 }
 @media (max-width: 580px) { .page { padding: 28px 20px 28px; } }
@@ -564,7 +563,7 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
   <div id="header-controls">
     <button class="ctrl-btn" onclick="changeFontSize(-2)">A−</button>
     <button class="ctrl-btn" onclick="changeFontSize(2)">A+</button>
-    <span id="page-counter-header">1 / 15</span>
+    <span id="page-counter-header">1 / 42</span>
     <button id="menu-btn" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
     </button>
@@ -634,21 +633,29 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <p>Neste ebook, vamos percorrer juntos cada etapa da sua jornada: dos primeiros dias de tratamento à manutenção dos resultados. Prepare-se para se conhecer melhor e construir hábitos que durem para sempre.</p>
   </div>
 
-  <!-- PAGE 4: Cap 1 -->
+  <!-- PAGE 4: Cap 1 — Parte 1 -->
   <div class="page" data-page="4" data-title="Cap. 1 — O Que É o Mounjaro">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">01</div>
     <div class="page-eyebrow">Capítulo 1</div>
-    <h1 class="page-title">O Que É o Mounjaro e Como Ele Age no Corpo</h1>
+    <h1 class="page-title">O Que É o Mounjaro e Como Ele Age</h1>
     <div class="title-rule"></div>
-    <p>O Mounjaro é o nome comercial da <strong>tirzepatida</strong>, uma medicação injetável semanal aprovada para o tratamento do diabetes tipo 2 e da obesidade. Diferente de outras medicações similares, a tirzepatida age em dois receptores ao mesmo tempo: o do GLP-1 e o do GIP.</p>
+    <p>O Mounjaro é o nome comercial da <strong>tirzepatida</strong>, uma medicação injetável semanal aprovada para o tratamento do diabetes tipo 2 e da obesidade. Diferente de outras medicações, a tirzepatida age em dois receptores ao mesmo tempo: o do GLP-1 e o do GIP.</p>
     <h2 class="section-heading">O que são GLP-1 e GIP?</h2>
     <p>GLP-1 e GIP são hormônios produzidos naturalmente pelo intestino após as refeições. Eles enviam sinais ao cérebro indicando que você está satisfeito, diminuem a produção de glucagon e retardam o esvaziamento gástrico.</p>
     <div class="tip-box">
       <strong>⚙️ Como funciona na prática</strong>
       <p>Com o Mounjaro, seu cérebro recebe o sinal de saciedade muito mais rapidamente. Você se satisfaz com porções menores e sente menos vontade de beliscar entre as refeições.</p>
     </div>
-    <h2 class="section-heading">Principais efeitos do Mounjaro</h2>
+  </div>
+
+  <!-- PAGE 5: Cap 1 — Parte 2 -->
+  <div class="page" data-page="5" data-title="Cap. 1 — Efeitos do Mounjaro">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">01</div>
+    <div class="page-eyebrow">Capítulo 1 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Principais efeitos do Mounjaro</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li><strong>Redução significativa do apetite</strong> — menos fome ao longo do dia.</li>
       <li><strong>Saciedade prolongada</strong> — as refeições duram mais tempo.</li>
@@ -661,27 +668,35 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 5: Cap 2 -->
-  <div class="page" data-page="5" data-title="Cap. 2 — Os Primeiros Dias">
+  <!-- PAGE 6: Cap 2 — Parte 1 -->
+  <div class="page" data-page="6" data-title="Cap. 2 — Os Primeiros Dias">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">02</div>
     <div class="page-eyebrow">Capítulo 2</div>
     <h1 class="page-title">Os Primeiros Dias: O Que Esperar</h1>
     <div class="title-rule"></div>
-    <p>Os primeiros dias após a primeira aplicação do Mounjaro costumam ser os mais desafiadores — e também os mais surpreendentes. O corpo está se adaptando a uma nova sinalização hormonal, e isso pode gerar sensações que você nunca experimentou antes.</p>
+    <p>Os primeiros dias após a primeira aplicação costumam ser os mais desafiadores — e também os mais surpreendentes. O corpo está se adaptando a uma nova sinalização hormonal, gerando sensações que você nunca experimentou antes.</p>
     <h2 class="section-heading">O que pode acontecer na primeira semana</h2>
     <ul class="content-list">
       <li><strong>Náusea leve a moderada</strong> — o efeito mais comum, especialmente após as primeiras doses.</li>
-      <li><strong>Redução abrupta do apetite</strong> — você pode não sentir fome e precisar se lembrar de comer.</li>
+      <li><strong>Redução abrupta do apetite</strong> — você pode precisar se lembrar de comer.</li>
       <li><strong>Alterações no trânsito intestinal</strong> — constipação ou diarreia são comuns no início.</li>
       <li><strong>Cansaço</strong> — o corpo gastando energia para se adaptar.</li>
       <li><strong>Arrotos frequentes</strong> — o esvaziamento gástrico mais lento pode causar isso.</li>
     </ul>
     <div class="warning-box">
       <strong>⚠️ Atenção</strong>
-      <p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Esses sintomas podem indicar necessidade de ajuste na dose.</p>
+      <p>Se sentir náusea muito intensa, vômitos persistentes ou dor abdominal forte, entre em contato com seu médico. Podem indicar necessidade de ajuste na dose.</p>
     </div>
-    <h2 class="section-heading">Estratégias para os primeiros dias</h2>
+  </div>
+
+  <!-- PAGE 7: Cap 2 — Parte 2 -->
+  <div class="page" data-page="7" data-title="Cap. 2 — Estratégias Iniciais">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">02</div>
+    <div class="page-eyebrow">Capítulo 2 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Estratégias para os primeiros dias</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li>Faça refeições pequenas e frequentes.</li>
       <li>Evite alimentos gordurosos e ultraprocessados.</li>
@@ -694,8 +709,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 6: Cap 3 -->
-  <div class="page" data-page="6" data-title="Cap. 3 — Alimentação">
+  <!-- PAGE 8: Cap 3 — Parte 1 -->
+  <div class="page" data-page="8" data-title="Cap. 3 — Alimentação: Proteínas">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">03</div>
     <div class="page-eyebrow">Capítulo 3</div>
@@ -703,7 +718,7 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <div class="title-rule"></div>
     <p>O Mounjaro reduz o apetite, mas não garante automaticamente uma alimentação saudável. O que você come continua sendo fundamental para que a perda de peso seja feita com qualidade — preservando massa muscular e garantindo todos os nutrientes necessários.</p>
     <h2 class="section-heading">Priorize proteínas em cada refeição</h2>
-    <p>Com a redução do apetite, há risco de comer menos proteína do que o necessário. Isso pode levar à perda de massa muscular ao invés de gordura. Procure incluir em cada refeição:</p>
+    <p>Com o apetite reduzido, há risco de comer menos proteína do que o necessário, levando à perda de massa muscular. Procure incluir em cada refeição:</p>
     <ul class="content-list">
       <li>Frango, peixe, ovos, carne magra</li>
       <li>Leguminosas: feijão, lentilha, grão-de-bico</li>
@@ -712,9 +727,17 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </ul>
     <div class="tip-box">
       <strong>🥗 Meta de proteína</strong>
-      <p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal para você.</p>
+      <p>Busque consumir entre 1,2 g e 1,6 g de proteína por kg de peso corporal por dia. Converse com seu nutricionista para calcular a quantidade ideal.</p>
     </div>
-    <h2 class="section-heading">Alimentos que pioram os efeitos colaterais</h2>
+  </div>
+
+  <!-- PAGE 9: Cap 3 — Parte 2 -->
+  <div class="page" data-page="9" data-title="Cap. 3 — Alimentos a Evitar">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">03</div>
+    <div class="page-eyebrow">Capítulo 3 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Alimentos que pioram os efeitos colaterais</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li>Alimentos muito gordurosos (frituras, fast food)</li>
       <li>Bebidas gaseificadas e alcoólicas</li>
@@ -726,21 +749,29 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 7: Cap 4 -->
-  <div class="page" data-page="7" data-title="Cap. 4 — Hidratação e Suplementação">
+  <!-- PAGE 10: Cap 4 — Parte 1 -->
+  <div class="page" data-page="10" data-title="Cap. 4 — Hidratação">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">04</div>
     <div class="page-eyebrow">Capítulo 4</div>
     <h1 class="page-title">Hidratação e Suplementação</h1>
     <div class="title-rule"></div>
-    <p>Com o apetite reduzido, muitas pessoas também acabam reduzindo a ingestão de líquidos sem perceber. A hidratação adequada é essencial durante o tratamento — tanto para o bem-estar geral quanto para minimizar efeitos colaterais como constipação e fadiga.</p>
+    <p>Com o apetite reduzido, muitas pessoas também acabam reduzindo a ingestão de líquidos sem perceber. A hidratação adequada é essencial durante o tratamento — tanto para o bem-estar geral quanto para minimizar constipação e fadiga.</p>
     <h2 class="section-heading">Meta de hidratação diária</h2>
-    <p>O objetivo é beber entre <strong>2 e 2,5 litros de líquidos por dia</strong>. Prefira água, água com gás com moderação, chás sem açúcar e água de coco.</p>
+    <p>O objetivo é beber entre <strong>2 e 2,5 litros de líquidos por dia</strong>. Prefira água, chás sem açúcar e água de coco.</p>
     <div class="tip-box">
       <strong>💧 Dica de hidratação</strong>
       <p>Leve uma garrafinha de água para todos os lugares. Coloque lembretes no celular para beber água — sem fome, sem sede, é fácil se esquecer dos líquidos também.</p>
     </div>
-    <h2 class="section-heading">Suplementação mais recomendada</h2>
+  </div>
+
+  <!-- PAGE 11: Cap 4 — Parte 2 -->
+  <div class="page" data-page="11" data-title="Cap. 4 — Suplementação">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">04</div>
+    <div class="page-eyebrow">Capítulo 4 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Suplementação mais recomendada</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li><strong>Vitamina B12</strong> — essencial para o sistema nervoso.</li>
       <li><strong>Vitamina D + Cálcio</strong> — saúde óssea durante a perda de peso.</li>
@@ -754,8 +785,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 8: Cap 5 — INTERATIVO -->
-  <div class="page" data-page="8" data-title="Cap. 5 — Efeitos Colaterais ★">
+  <!-- PAGE 12: Cap 5 — Parte 1 -->
+  <div class="page" data-page="12" data-title="Cap. 5 — Efeitos Colaterais">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">05</div>
     <div class="page-eyebrow">Capítulo 5</div>
@@ -770,7 +801,14 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <strong>🍵 Aliados naturais</strong>
       <p>Gengibre, hortelã, camomila e erva-cidreira podem ajudar a aliviar desconfortos gastrointestinais de forma segura.</p>
     </div>
-    <div class="quiz-section">
+  </div>
+
+  <!-- PAGE 13: Cap 5 — Parte 2 (QUIZ) ★ -->
+  <div class="page" data-page="13" data-title="Cap. 5 — Questionário ★">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">05</div>
+    <div class="page-eyebrow">Capítulo 5 — Questionário</div>
+    <div class="quiz-section" style="margin-top:16px;">
       <h3>✏️ Questionário — Capítulo 5</h3>
       <div class="quiz-question">
         <label>1. Qual efeito colateral você sentiu mais até agora?</label>
@@ -792,8 +830,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 9: Cap 6 -->
-  <div class="page" data-page="9" data-title="Cap. 6 — Exercícios Físicos">
+  <!-- PAGE 14: Cap 6 — Parte 1 -->
+  <div class="page" data-page="14" data-title="Cap. 6 — Exercícios Físicos">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">06</div>
     <div class="page-eyebrow">Capítulo 6</div>
@@ -812,15 +850,23 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <strong>🏃 Recomendação mínima</strong>
       <p>150 minutos de atividade moderada por semana (OMS). Isso equivale a 30 minutos de caminhada rápida, 5 dias por semana. Simples e eficaz.</p>
     </div>
-    <h2 class="section-heading">Qual tipo de exercício é melhor?</h2>
+  </div>
+
+  <!-- PAGE 15: Cap 6 — Parte 2 -->
+  <div class="page" data-page="15" data-title="Cap. 6 — Qual Exercício Escolher">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">06</div>
+    <div class="page-eyebrow">Capítulo 6 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Qual tipo de exercício é melhor?</h2>
+    <div class="title-rule"></div>
     <p><strong>Musculação / Treinamento de força</strong> é o mais recomendado durante o uso do Mounjaro, pois é o que mais protege a massa muscular. Combinado com exercício aeróbico, os resultados são ainda melhores.</p>
     <div class="highlight-box">
       "Se você nunca se exercitou antes, comece com 10 minutos de caminhada por dia. Consistência bate intensidade. O hábito é mais importante do que a performance."
     </div>
   </div>
 
-  <!-- PAGE 10: Cap 7 -->
-  <div class="page" data-page="10" data-title="Cap. 7 — Saúde Mental e Autoestima">
+  <!-- PAGE 16: Cap 7 — Parte 1 -->
+  <div class="page" data-page="16" data-title="Cap. 7 — Saúde Mental">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">07</div>
     <div class="page-eyebrow">Capítulo 7</div>
@@ -832,7 +878,15 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <div class="highlight-box">
       "Você não está com fome de comida — você está com fome de algo mais. Identifique o que é: descanso? Conexão? Prazer? E encontre outras formas de nutri-lo."
     </div>
-    <h2 class="section-heading">Autoestima e corpo em transformação</h2>
+  </div>
+
+  <!-- PAGE 17: Cap 7 — Parte 2 -->
+  <div class="page" data-page="17" data-title="Cap. 7 — Autoestima">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">07</div>
+    <div class="page-eyebrow">Capítulo 7 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Autoestima e corpo em transformação</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li>Celebre cada conquista, por menor que seja.</li>
       <li>Não se compare com outros — cada corpo responde diferente.</li>
@@ -845,8 +899,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 11: Cap 8 — INTERATIVO -->
-  <div class="page" data-page="11" data-title="Cap. 8 — Resultados e Linha do Tempo ★">
+  <!-- PAGE 18: Cap 8 — Parte 1 -->
+  <div class="page" data-page="18" data-title="Cap. 8 — Linha do Tempo">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">08</div>
     <div class="page-eyebrow">Capítulo 8</div>
@@ -874,7 +928,14 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <strong>⚠️ Platôs são normais</strong>
       <p>Toda jornada tem platôs. Isso não significa que você parou de progredir. Confie no processo.</p>
     </div>
-    <div class="quiz-section">
+  </div>
+
+  <!-- PAGE 19: Cap 8 — Parte 2 (QUIZ) ★ -->
+  <div class="page" data-page="19" data-title="Cap. 8 — Questionário ★">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">08</div>
+    <div class="page-eyebrow">Capítulo 8 — Questionário</div>
+    <div class="quiz-section" style="margin-top:16px;">
       <h3>✏️ Questionário — Capítulo 8</h3>
       <div class="quiz-question">
         <label>3. Há quantos meses você está no tratamento?</label>
@@ -895,8 +956,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 12: Cap 9 -->
-  <div class="page" data-page="12" data-title="Cap. 9 — Dicas para Potencializar">
+  <!-- PAGE 20: Cap 9 — Parte 1 -->
+  <div class="page" data-page="20" data-title="Cap. 9 — Dicas para Potencializar">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">09</div>
     <div class="page-eyebrow">Capítulo 9</div>
@@ -910,9 +971,17 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <p>Mesmo sem fome, comer de 3 a 4 vezes ao dia mantém o metabolismo ativo e evita episódios de comer demais por excesso de privação.</p>
     <div class="tip-box">
       <strong>🌙 Hábito poderoso</strong>
-      <p>Crie uma rotina noturna relaxante: chá de camomila, sem telas 30 min antes de dormir, temperatura ambiente agradável. O sono de qualidade é subestimado.</p>
+      <p>Crie uma rotina noturna relaxante: chá de camomila, sem telas 30 min antes de dormir, temperatura agradável. O sono de qualidade é subestimado.</p>
     </div>
-    <h2 class="section-heading">4. Registre seu progresso</h2>
+  </div>
+
+  <!-- PAGE 21: Cap 9 — Parte 2 -->
+  <div class="page" data-page="21" data-title="Cap. 9 — Progresso e Conquistas">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">09</div>
+    <div class="page-eyebrow">Capítulo 9 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">4. Registre seu progresso</h2>
+    <div class="title-rule"></div>
     <p>Tire fotos mensais, anote medidas e registre como você se sente. A balança nem sempre reflete todo o progresso real.</p>
     <h2 class="section-heading">5. Celebre cada conquista</h2>
     <ul class="content-list">
@@ -925,8 +994,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 13: Cap 10 -->
-  <div class="page" data-page="13" data-title="Cap. 10 — Manutenção a Longo Prazo">
+  <!-- PAGE 22: Cap 10 — Parte 1 -->
+  <div class="page" data-page="22" data-title="Cap. 10 — Manutenção">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">10</div>
     <div class="page-eyebrow">Capítulo 10</div>
@@ -938,7 +1007,15 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <div class="highlight-box">
       "O Mounjaro cria a janela de oportunidade. Os hábitos que você construiu nessa janela são o que mantém os resultados quando ela se fecha."
     </div>
-    <h2 class="section-heading">Pilares da manutenção</h2>
+  </div>
+
+  <!-- PAGE 23: Cap 10 — Parte 2 -->
+  <div class="page" data-page="23" data-title="Cap. 10 — Pilares da Manutenção">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">10</div>
+    <div class="page-eyebrow">Capítulo 10 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Pilares da manutenção</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li><strong>Alimentação consistente</strong> — não precisa ser perfeita, mas precisa ser consistente.</li>
       <li><strong>Atividade física regular</strong> — especialmente treino de força.</li>
@@ -952,8 +1029,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 14: Cap 11 — Pele -->
-  <div class="page" data-page="14" data-title="Cap. 11 — A Saúde da Pele">
+  <!-- PAGE 24: Cap 11 — Parte 1 -->
+  <div class="page" data-page="24" data-title="Cap. 11 — A Saúde da Pele">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">11</div>
     <div class="page-eyebrow">Capítulo 11</div>
@@ -961,40 +1038,41 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     <div class="title-rule"></div>
     <p>Uma das maiores preocupações de quem emagrece rapidamente é a flacidez. Com o Mounjaro proporcionando perdas expressivas de peso em pouco tempo, é natural que a pele precise de atenção redobrada para acompanhar essa mudança.</p>
     <h2 class="section-heading">Por que a flacidez acontece?</h2>
-    <p>A pele é elástica, mas tem limites. Quando acumula gordura por anos e depois perde esse volume rapidamente, ela não consegue se retrair na mesma velocidade. Quanto mais rápida a perda, maior o risco de flacidez — especialmente em braços, abdômen, coxas e pescoço.</p>
+    <p>A pele é elástica, mas tem limites. Quando acumula gordura por anos e depois perde esse volume rapidamente, ela não consegue se retrair na mesma velocidade — especialmente em braços, abdômen, coxas e pescoço.</p>
     <div class="tip-box">
       <strong>💡 Boa notícia</strong>
-      <p>A pele continua se adaptando por meses após a perda de peso. Muitas pessoas veem melhora significativa com o tempo, especialmente quando combinam nutrição adequada, exercícios e cuidados tópicos.</p>
+      <p>A pele continua se adaptando por meses após a perda de peso. Muitas pessoas veem melhora significativa com o tempo, combinando nutrição adequada, exercícios e cuidados tópicos.</p>
     </div>
-    <h2 class="section-heading">O que realmente ajuda</h2>
+  </div>
+
+  <!-- PAGE 25: Cap 11 — Parte 2 -->
+  <div class="page" data-page="25" data-title="Cap. 11 — O Que Realmente Ajuda">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">11</div>
+    <div class="page-eyebrow">Capítulo 11 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">O que realmente ajuda</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
-      <li><strong>Proteína adequada</strong> — o colágeno é uma proteína. Sem aminoácidos suficientes, o corpo não consegue produzir fibras elásticas novas.</li>
-      <li><strong>Colágeno hidrolisado</strong> — suplementação com 10–15g/dia tem evidências de melhora na elasticidade da pele.</li>
-      <li><strong>Vitamina C</strong> — cofator essencial para a síntese de colágeno. Frutas cítricas, pimentão e brócolis são excelentes fontes.</li>
-      <li><strong>Treino de força</strong> — ao aumentar o volume muscular embaixo da pele, cria uma "base" que reduz o aspecto flácido.</li>
-      <li><strong>Hidratação da pele</strong> — cremes com retinol, ácido hialurônico e vitamina E ajudam na textura superficial.</li>
-      <li><strong>Massagem e drenagem linfática</strong> — melhoram a circulação e podem acelerar a retração da pele.</li>
-    </ul>
-    <h2 class="section-heading">O que NÃO funciona</h2>
-    <ul class="content-list">
-      <li>Cremes milagrosos prometendo eliminar flacidez em dias — não existem.</li>
-      <li>Perda de peso ainda mais rápida — piora o problema.</li>
-      <li>Ficar parado esperando — o músculo é o seu melhor aliado.</li>
+      <li><strong>Proteína adequada</strong> — o colágeno é uma proteína. Sem aminoácidos suficientes, o corpo não produz fibras elásticas novas.</li>
+      <li><strong>Colágeno hidrolisado</strong> — 10–15g/dia tem evidências de melhora na elasticidade da pele.</li>
+      <li><strong>Vitamina C</strong> — cofator essencial para a síntese de colágeno. Frutas cítricas e pimentão são ótimas fontes.</li>
+      <li><strong>Treino de força</strong> — cria uma "base muscular" que reduz o aspecto flácido.</li>
+      <li><strong>Hidratação da pele</strong> — cremes com retinol, ácido hialurônico e vitamina E.</li>
+      <li><strong>Drenagem linfática</strong> — melhora a circulação e acelera a retração da pele.</li>
     </ul>
     <div class="highlight-box">
       "A pele é resiliente. Dê a ela tempo, nutrição e estímulo muscular — ela vai te surpreender."
     </div>
   </div>
 
-  <!-- PAGE 15: Cap 12 — Receitas -->
-  <div class="page" data-page="15" data-title="Cap. 12 — Receitas Práticas">
+  <!-- PAGE 26: Cap 12 — Parte 1 -->
+  <div class="page" data-page="26" data-title="Cap. 12 — Receitas Práticas">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">12</div>
     <div class="page-eyebrow">Capítulo 12</div>
-    <h1 class="page-title">Receitas Práticas: O Prato Perfeito Pós-Mounjaro</h1>
+    <h1 class="page-title">Receitas Práticas: O Prato Perfeito</h1>
     <div class="title-rule"></div>
-    <p>Com o apetite reduzido, cada refeição precisa ser densa em nutrientes. Não é sobre comer menos — é sobre comer melhor. Aqui estão as bases para montar pratos que nutrem sem pesar.</p>
-    <h2 class="section-heading">A fórmula do prato ideal</h2>
+    <p>Com o apetite reduzido, cada refeição precisa ser densa em nutrientes. Não é sobre comer menos — é sobre comer melhor.</p>
     <div class="tip-box">
       <strong>🥘 Estrutura de cada refeição</strong>
       <p><strong>½ prato:</strong> vegetais variados (crus, cozidos ou grelhados)<br>
@@ -1003,17 +1081,24 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
     <h2 class="section-heading">Ideias de refeições que funcionam</h2>
     <ul class="content-list">
-      <li><strong>Café da manhã:</strong> Iogurte grego com frutas vermelhas + 1 colher de whey + granola sem açúcar.</li>
+      <li><strong>Café da manhã:</strong> Iogurte grego com frutas vermelhas + whey + granola sem açúcar.</li>
       <li><strong>Almoço:</strong> Frango grelhado com legumes no vapor + arroz integral + azeite.</li>
-      <li><strong>Lanche:</strong> Ovo cozido + fatia de queijo cottage + pepino em palitos.</li>
+      <li><strong>Lanche:</strong> Ovo cozido + queijo cottage + pepino em palitos.</li>
       <li><strong>Jantar:</strong> Salmão assado com brócolis e purê de batata-doce.</li>
-      <li><strong>Ceia (se necessário):</strong> Iogurte grego natural + colher de pasta de amendoim.</li>
     </ul>
-    <h2 class="section-heading">Snacks que salvam o dia</h2>
+  </div>
+
+  <!-- PAGE 27: Cap 12 — Parte 2 -->
+  <div class="page" data-page="27" data-title="Cap. 12 — Snacks e Dicas">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">12</div>
+    <div class="page-eyebrow">Capítulo 12 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Snacks que salvam o dia</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
       <li>Castanhas (porção de 30g — ricas em gorduras boas)</li>
       <li>Queijo cottage com ervas</li>
-      <li>Edamame (soja jovem) — prático e proteico</li>
+      <li>Edamame — prático e proteico</li>
       <li>Atum com biscoito de arroz</li>
     </ul>
     <h2 class="section-heading">O que evitar nas refeições</h2>
@@ -1027,96 +1112,110 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 16: Cap 13 — Eventos Sociais -->
-  <div class="page" data-page="16" data-title="Cap. 13 — Eventos Sociais e Restaurantes">
+  <!-- PAGE 28: Cap 13 — Parte 1 -->
+  <div class="page" data-page="28" data-title="Cap. 13 — Eventos Sociais">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">13</div>
     <div class="page-eyebrow">Capítulo 13</div>
-    <h1 class="page-title">Como se Virar em Eventos Sociais e Restaurantes</h1>
+    <h1 class="page-title">Como se Virar em Eventos Sociais</h1>
     <div class="title-rule"></div>
-    <p>Uma das situações mais desafiadoras no tratamento é manter os hábitos quando a vida social chama. Festas, almoços em família, happy hours, aniversários — a comida está em todo lugar. E junto com ela, os comentários das pessoas.</p>
+    <p>Uma das situações mais desafiadoras no tratamento é manter os hábitos quando a vida social chama. Festas, almoços em família, happy hours — a comida está em todo lugar.</p>
     <h2 class="section-heading">No restaurante</h2>
     <ul class="content-list">
-      <li>Consulte o cardápio online antes de sair — chegue já com a escolha na mente.</li>
+      <li>Consulte o cardápio online antes de sair — chegue com a escolha na mente.</li>
       <li>Peça meia-porção quando possível, ou divida com alguém.</li>
       <li>Prefira grelhados, assados ou cozidos no vapor.</li>
       <li>Beba água antes de pedir — reduz a tentação de escolher por impulso.</li>
-      <li>Molhos e temperos à parte: muitos restaurantes usam quantidades excessivas de gordura.</li>
+      <li>Molhos e temperos à parte sempre que possível.</li>
     </ul>
-    <h2 class="section-heading">Em festas e confraternizações</h2>
+  </div>
+
+  <!-- PAGE 29: Cap 13 — Parte 2 -->
+  <div class="page" data-page="29" data-title="Cap. 13 — Festas e Viagens">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">13</div>
+    <div class="page-eyebrow">Capítulo 13 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Em festas e confraternizações</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
-      <li>Coma algo leve em casa antes — não chegue com fome extrema.</li>
-      <li>Fique perto dos legumes, frios e proteínas na mesa de frios.</li>
+      <li>Coma algo leve em casa antes de sair.</li>
+      <li>Fique perto dos legumes, frios e proteínas na mesa.</li>
       <li>Você não precisa provar tudo — "não, obrigado" é uma frase completa.</li>
-      <li>Alcoólicos com moderação: prefira vinho seco ou destilados puros em vez de drinks açucarados.</li>
     </ul>
     <div class="tip-box">
       <strong>💬 Como lidar com os comentários</strong>
-      <p>"Você não vai comer mais nada?" — "Estou satisfeito(a), obrigado(a)!"<br>
-      "Você emagrece, mas depois engorda tudo de novo" — "Estou cuidando da minha saúde. Obrigado pela preocupação."<br>
-      Você não precisa explicar seu tratamento para ninguém.</p>
+      <p>"Você não vai comer mais nada?" — "Estou satisfeito(a), obrigado(a)!"<br>Você não precisa explicar seu tratamento para ninguém.</p>
     </div>
     <h2 class="section-heading">Viagens</h2>
-    <p>Mantenha snacks proteicos na bolsa (castanhas, barrinha de proteína). Pesquise restaurantes no destino com antecedência. Em hotéis, prefira o café da manhã buffet e monte um prato equilibrado.</p>
+    <p>Mantenha snacks proteicos na bolsa. Pesquise restaurantes no destino com antecedência. Em hotéis, monte um prato equilibrado no café da manhã buffet.</p>
     <div class="highlight-box">
       "A vida social não precisa parar por causa do tratamento. Com estratégia, você pode estar em qualquer lugar e continuar no caminho certo."
     </div>
   </div>
 
-  <!-- PAGE 17: Cap 14 — Platôs -->
-  <div class="page" data-page="17" data-title="Cap. 14 — Quando o Peso Para de Cair">
+  <!-- PAGE 30: Cap 14 — Parte 1 -->
+  <div class="page" data-page="30" data-title="Cap. 14 — Quebrando o Platô">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">14</div>
     <div class="page-eyebrow">Capítulo 14</div>
     <h1 class="page-title">Quando o Peso Para de Cair: Quebrando o Platô</h1>
     <div class="title-rule"></div>
-    <p>Você estava perdendo peso consistentemente e, de repente, a balança travou. Passaram semanas e o número não muda. Isso se chama <strong>platô</strong> — e é uma das fases mais frustrantes da jornada. Mas tem solução.</p>
+    <p>Você estava perdendo peso consistentemente e, de repente, a balança travou. Isso se chama <strong>platô</strong> — e é uma das fases mais frustrantes da jornada. Mas tem solução.</p>
     <h2 class="section-heading">Por que o platô acontece?</h2>
-    <p>O corpo é inteligente. Quando percebe que está perdendo peso, começa a adaptar o metabolismo para gastar menos energia — um mecanismo de sobrevivência evolutivo. Além disso, ao perder peso, você precisa de menos calorias para manter o novo corpo.</p>
+    <p>O corpo é inteligente. Quando percebe que está perdendo peso, começa a adaptar o metabolismo para gastar menos energia — um mecanismo de sobrevivência evolutivo.</p>
     <div class="warning-box">
       <strong>⚠️ O platô não é falha sua</strong>
       <p>Não significa que você parou de fazer as coisas certas. É biologia. A chave é não desistir e fazer ajustes estratégicos.</p>
     </div>
-    <h2 class="section-heading">Estratégias para quebrar o platô</h2>
+  </div>
+
+  <!-- PAGE 31: Cap 14 — Parte 2 -->
+  <div class="page" data-page="31" data-title="Cap. 14 — Estratégias Anti-Platô">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">14</div>
+    <div class="page-eyebrow">Capítulo 14 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Estratégias para quebrar o platô</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
-      <li><strong>Reavalie a ingestão calórica</strong> — com menos peso, o metabolismo mudou. Recalcule suas necessidades.</li>
-      <li><strong>Varie o treino</strong> — o corpo se adapta aos exercícios. Adicione um novo estímulo: mais peso, mais repetições, outro tipo de exercício.</li>
-      <li><strong>Aumente as proteínas</strong> — efeito termogênico e proteção muscular durante a adaptação.</li>
-      <li><strong>Refeed estratégico</strong> — um dia com mais carboidratos (dentro do plano) pode "reiniciar" o metabolismo.</li>
-      <li><strong>Priorize o sono</strong> — privação de sono aumenta o cortisol e bloqueia a perda de gordura.</li>
+      <li><strong>Reavalie a ingestão calórica</strong> — com menos peso, o metabolismo mudou.</li>
+      <li><strong>Varie o treino</strong> — adicione novos estímulos: mais peso, mais repetições.</li>
+      <li><strong>Aumente as proteínas</strong> — efeito termogênico e proteção muscular.</li>
+      <li><strong>Priorize o sono</strong> — privação de sono bloqueia a perda de gordura.</li>
       <li><strong>Converse com o médico</strong> — pode ser hora de ajustar a dose do Mounjaro.</li>
-    </ul>
-    <h2 class="section-heading">O que NÃO fazer no platô</h2>
-    <ul class="content-list">
-      <li>Cortar calorias drasticamente — piora a adaptação metabólica.</li>
-      <li>Parar os exercícios — perde músculo e desacelera mais ainda.</li>
-      <li>Abandonar o tratamento — o platô é temporário.</li>
     </ul>
     <div class="highlight-box">
       "Um platô não é um sinal de parada. É o seu corpo pedindo um ajuste. Ouça-o, faça os ajustes e continue."
     </div>
   </div>
 
-  <!-- PAGE 18: Cap 15 — Sono e Hormônios -->
-  <div class="page" data-page="18" data-title="Cap. 15 — Sono, Estresse e Hormônios">
+  <!-- PAGE 32: Cap 15 — Parte 1 -->
+  <div class="page" data-page="32" data-title="Cap. 15 — Sono e Hormônios">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">15</div>
     <div class="page-eyebrow">Capítulo 15</div>
-    <h1 class="page-title">Sono, Estresse e Hormônios: O Triângulo Invisível</h1>
+    <h1 class="page-title">Sono, Estresse e Hormônios</h1>
     <div class="title-rule"></div>
-    <p>Você pode fazer tudo certo — comer bem, se exercitar, usar o Mounjaro corretamente — e ainda assim ter dificuldade para emagrecer se ignorar esses três fatores. Sono, estresse e hormônios formam um triângulo invisível que governa boa parte do seu resultado.</p>
+    <p>Você pode fazer tudo certo — comer bem, se exercitar, usar o Mounjaro corretamente — e ainda assim ter dificuldade para emagrecer se ignorar esses três fatores. Sono, estresse e hormônios governam boa parte do seu resultado.</p>
     <h2 class="section-heading">O que acontece quando você não dorme bem</h2>
     <ul class="content-list">
-      <li>O cortisol (hormônio do estresse) aumenta — favorece o acúmulo de gordura abdominal.</li>
+      <li>O cortisol aumenta — favorece o acúmulo de gordura abdominal.</li>
       <li>A grelina (hormônio da fome) sobe — você sente mais fome mesmo com o Mounjaro.</li>
-      <li>A leptina (hormônio da saciedade) cai — o cérebro não recebe o sinal de "cheio".</li>
-      <li>O GH (hormônio do crescimento) é secretado principalmente durante o sono profundo — essencial para queimar gordura e preservar músculo.</li>
+      <li>A leptina (saciedade) cai — o cérebro não recebe o sinal de "cheio".</li>
+      <li>O GH é secretado durante o sono profundo — essencial para queimar gordura.</li>
     </ul>
     <div class="tip-box">
       <strong>🌙 Meta de sono</strong>
       <p>7 a 9 horas por noite, com horário regular de dormir e acordar. A qualidade importa tanto quanto a quantidade — evite telas 1h antes de dormir.</p>
     </div>
-    <h2 class="section-heading">Cortisol e emagrecimento</h2>
+  </div>
+
+  <!-- PAGE 33: Cap 15 — Parte 2 -->
+  <div class="page" data-page="33" data-title="Cap. 15 — Cortisol e Regulação">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">15</div>
+    <div class="page-eyebrow">Capítulo 15 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Cortisol e emagrecimento</h2>
+    <div class="title-rule"></div>
     <p>Estresse crônico mantém o cortisol elevado. Isso não apenas dificulta a perda de gordura, mas aumenta o apetite emocional e favorece o acúmulo na região abdominal — exatamente onde queremos perder.</p>
     <h2 class="section-heading">Como regular o eixo sono-estresse-hormônios</h2>
     <ul class="content-list">
@@ -1124,29 +1223,36 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <li>Meditação ou respiração profunda por 10 minutos ao dia.</li>
       <li>Exposição ao sol pela manhã — regula o ritmo circadiano.</li>
       <li>Evitar cafeína após as 14h.</li>
-      <li>Exercícios moderados (não intensos) à noite — ajudam o sono.</li>
     </ul>
     <div class="highlight-box">
       "Dormir 8 horas não é preguiça — é protocolo de emagrecimento. Trate o sono com a mesma seriedade que a dieta e o exercício."
     </div>
   </div>
 
-  <!-- PAGE 19: Cap 16 — Relacionamentos -->
-  <div class="page" data-page="19" data-title="Cap. 16 — Relacionamentos e a Nova Imagem">
+  <!-- PAGE 34: Cap 16 — Parte 1 -->
+  <div class="page" data-page="34" data-title="Cap. 16 — Relacionamentos">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">16</div>
     <div class="page-eyebrow">Capítulo 16</div>
     <h1 class="page-title">Relacionamentos e a Nova Imagem Corporal</h1>
     <div class="title-rule"></div>
-    <p>Emagrecer transforma não apenas o corpo — transforma também as relações. Algumas pessoas ficam mais animadas com sua mudança do que você esperava. Outras ficam desconfortáveis. E algumas podem, sem perceber, sabotar sua jornada.</p>
+    <p>Emagrecer transforma não apenas o corpo — transforma também as relações. Algumas pessoas ficam mais animadas com sua mudança. Outras ficam desconfortáveis e podem, sem perceber, sabotar sua jornada.</p>
     <h2 class="section-heading">Por que algumas pessoas reagem mal</h2>
-    <p>Quando você muda, espelha nas outras pessoas o que elas não estão fazendo. Isso pode gerar inveja velada, comentários disfarçados de "preocupação" ou tentativas de te fazer sair do plano ("Um pedacinho não vai fazer mal").</p>
+    <p>Quando você muda, espelha nas outras pessoas o que elas não estão fazendo. Isso pode gerar inveja velada, comentários disfarçados de "preocupação" ou tentativas de te fazer sair do plano.</p>
     <div class="warning-box">
       <strong>⚠️ Sabotagem emocional</strong>
-      <p>Nem sempre é intencional. Pessoas próximas podem inconscientemente te convidar para "sair da dieta" porque se sentem inseguras com a sua transformação. Reconheça os padrões sem julgamento — e mantenha o foco.</p>
+      <p>Pessoas próximas podem inconscientemente te convidar para "sair da dieta" porque se sentem inseguras. Reconheça os padrões sem julgamento — e mantenha o foco.</p>
     </div>
-    <h2 class="section-heading">Relacionamentos amorosos</h2>
-    <p>A perda de peso pode mudar a dinâmica do casal. Você pode ganhar mais confiança, mais atenção de terceiros, mais disposição. Isso é positivo — mas requer conversas abertas e honestas com o parceiro sobre as mudanças que estão acontecendo.</p>
+  </div>
+
+  <!-- PAGE 35: Cap 16 — Parte 2 -->
+  <div class="page" data-page="35" data-title="Cap. 16 — A Nova Relação com Você">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">16</div>
+    <div class="page-eyebrow">Capítulo 16 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Relacionamentos amorosos</h2>
+    <div class="title-rule"></div>
+    <p>A perda de peso pode mudar a dinâmica do casal. Você pode ganhar mais confiança, mais atenção de terceiros, mais disposição. Isso é positivo — mas requer conversas abertas e honestas com o parceiro.</p>
     <h2 class="section-heading">A nova relação com você mesmo(a)</h2>
     <ul class="content-list">
       <li>A imagem mental do corpo demora a acompanhar a imagem real — isso é normal.</li>
@@ -1158,69 +1264,83 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 20: Cap 17 — Mulheres e o Mounjaro -->
-  <div class="page" data-page="20" data-title="Cap. 17 — Mulheres e o Mounjaro">
+  <!-- PAGE 36: Cap 17 — Parte 1 -->
+  <div class="page" data-page="36" data-title="Cap. 17 — Mulheres e o Mounjaro">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">17</div>
     <div class="page-eyebrow">Capítulo 17</div>
-    <h1 class="page-title">Mulheres e o Mounjaro: Ciclo, Menopausa e Especificidades</h1>
+    <h1 class="page-title">Mulheres e o Mounjaro: Especificidades</h1>
     <div class="title-rule"></div>
     <p>A maioria das pessoas que usam Mounjaro para emagrecimento são mulheres — e o corpo feminino tem particularidades hormonais que afetam diretamente o resultado do tratamento.</p>
     <h2 class="section-heading">O ciclo menstrual e o peso</h2>
-    <p>É normal o peso variar de 1 a 3 kg ao longo do ciclo menstrual devido à retenção hídrica — especialmente na fase lútea (após a ovulação). Não entre em pânico com a balança nessa semana. Essa variação não é gordura.</p>
+    <p>É normal o peso variar de 1 a 3 kg ao longo do ciclo menstrual devido à retenção hídrica — especialmente na fase lútea. Não entre em pânico com a balança nessa semana. Essa variação não é gordura.</p>
     <div class="tip-box">
       <strong>📅 Dica do ciclo</strong>
-      <p>Pese-se sempre no mesmo dia da semana, preferencialmente na fase folicular (logo após a menstruação), quando a retenção hídrica é menor. Isso dá uma leitura mais precisa do progresso real.</p>
+      <p>Pese-se sempre no mesmo dia da semana, preferencialmente na fase folicular (logo após a menstruação), quando a retenção hídrica é menor.</p>
     </div>
-    <h2 class="section-heading">SOP (Síndrome do Ovário Policístico)</h2>
-    <p>Mulheres com SOP têm resistência à insulina aumentada, o que pode dificultar o emagrecimento. O Mounjaro, ao melhorar a sensibilidade à insulina, pode ser especialmente benéfico para esse grupo — mas o acompanhamento médico é ainda mais importante.</p>
+  </div>
+
+  <!-- PAGE 37: Cap 17 — Parte 2 -->
+  <div class="page" data-page="37" data-title="Cap. 17 — SOP e Menopausa">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">17</div>
+    <div class="page-eyebrow">Capítulo 17 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">SOP (Síndrome do Ovário Policístico)</h2>
+    <div class="title-rule"></div>
+    <p>Mulheres com SOP têm resistência à insulina aumentada. O Mounjaro, ao melhorar a sensibilidade à insulina, pode ser especialmente benéfico — mas o acompanhamento médico é ainda mais importante.</p>
     <h2 class="section-heading">Menopausa e pré-menopausa</h2>
-    <p>A queda do estrogênio favorece o acúmulo de gordura abdominal e dificulta o emagrecimento. O Mounjaro pode ajudar, mas mulheres nessa fase podem precisar de estratégias adicionais:</p>
+    <p>A queda do estrogênio favorece o acúmulo de gordura abdominal. O Mounjaro pode ajudar, mas mulheres nessa fase podem precisar de estratégias adicionais:</p>
     <ul class="content-list">
       <li>Mais treino de força (protege ossos e músculo).</li>
       <li>Avaliação de terapia hormonal com ginecologista.</li>
       <li>Atenção redobrada ao cálcio e vitamina D.</li>
-      <li>Gerenciamento do estresse (cortisol é ainda mais impactante pós-menopausa).</li>
     </ul>
     <div class="highlight-box">
       "O corpo feminino é complexo e poderoso. Entender suas fases não é desculpa — é estratégia."
     </div>
   </div>
 
-  <!-- PAGE 21: Cap 18 — Custos e Logística -->
-  <div class="page" data-page="21" data-title="Cap. 18 — Custos e Logística do Tratamento">
+  <!-- PAGE 38: Cap 18 — Parte 1 -->
+  <div class="page" data-page="38" data-title="Cap. 18 — Custos do Tratamento">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">18</div>
     <div class="page-eyebrow">Capítulo 18</div>
-    <h1 class="page-title">Custos, Logística e Continuidade do Tratamento</h1>
+    <h1 class="page-title">Custos, Logística e Continuidade</h1>
     <div class="title-rule"></div>
-    <p>O Mounjaro é um medicamento de alto custo, e planejar financeiramente o tratamento é tão importante quanto seguir o plano alimentar. Conhecer as formas de acesso, as opções disponíveis e como manter a continuidade sem quebrar o orçamento é fundamental.</p>
+    <p>O Mounjaro é um medicamento de alto custo, e planejar financeiramente o tratamento é tão importante quanto seguir o plano alimentar.</p>
     <h2 class="section-heading">Por que o Mounjaro custa mais?</h2>
     <p>Por ser uma molécula de ação dupla (GIP + GLP-1), o Mounjaro é tecnologicamente mais complexo do que outros análogos de GLP-1. Isso se reflete no preço — mas também nos resultados mais expressivos.</p>
     <div class="tip-box">
       <strong>💊 Dica de compra</strong>
-      <p>Sempre compare preços em farmácias de manipulação e lojas físicas. Algumas redes têm programas de fidelidade ou desconto para clientes com prescrição contínua. O programa de apoio ao paciente da fabricante também pode oferecer descontos.</p>
+      <p>Sempre compare preços em farmácias. Algumas redes têm programas de fidelidade para clientes com prescrição contínua. O programa de apoio ao paciente da fabricante também pode oferecer descontos.</p>
     </div>
-    <h2 class="section-heading">Logística das aplicações</h2>
+  </div>
+
+  <!-- PAGE 39: Cap 18 — Parte 2 -->
+  <div class="page" data-page="39" data-title="Cap. 18 — Logística e Continuidade">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">18</div>
+    <div class="page-eyebrow">Capítulo 18 — continuação</div>
+    <h2 class="section-heading" style="margin-top:0;font-size:1.15rem;font-style:normal;font-weight:700;">Logística das aplicações</h2>
+    <div class="title-rule"></div>
     <ul class="content-list">
-      <li><strong>Aplicação semanal</strong> — crie um dia fixo da semana e coloque um alarme recorrente no celular.</li>
-      <li><strong>Armazenamento</strong> — refrigerado entre 2°C e 8°C. Pode ficar fora da geladeira por até 21 dias em temperatura ambiente (até 30°C).</li>
+      <li><strong>Aplicação semanal</strong> — crie um dia fixo e coloque alarme recorrente.</li>
+      <li><strong>Armazenamento</strong> — refrigerado entre 2°C e 8°C.</li>
       <li><strong>Transporte</strong> — em viagens, use bolsas térmicas com gelo reutilizável. Não congele.</li>
-      <li><strong>Descarte</strong> — as canetas usadas devem ser descartadas em coletores de materiais perfurocortantes.</li>
+      <li><strong>Descarte</strong> — canetas usadas em coletores de materiais perfurocortantes.</li>
     </ul>
     <h2 class="section-heading">Como manter a continuidade</h2>
     <ul class="content-list">
-      <li>Agende as consultas médicas com antecedência — a renovação da receita não pode ser interrompida.</li>
+      <li>Agende consultas médicas com antecedência — a receita não pode ser interrompida.</li>
       <li>Mantenha sempre uma aplicação de reserva para emergências.</li>
-      <li>Comunique seu médico imediatamente se precisar pausar por razões financeiras — há alternativas para não perder o progresso.</li>
     </ul>
     <div class="highlight-box">
       "Investir na sua saúde agora reduz custos com médicos, exames e internações no futuro. O Mounjaro é caro — mas o custo da obesidade não tratada é muito maior."
     </div>
   </div>
 
-  <!-- PAGE 22: Cap 19 — FAQ -->
-  <div class="page" data-page="22" data-title="Cap. 19 — Perguntas Frequentes">
+  <!-- PAGE 40: Cap 19 — FAQ Parte 1 -->
+  <div class="page" data-page="40" data-title="Cap. 19 — Perguntas Frequentes (1/2)">
     <span class="read-badge">✓ Lida</span>
     <div class="chapter-number-display">19</div>
     <div class="page-eyebrow">Capítulo 19</div>
@@ -1238,6 +1358,14 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
       <div class="faq-q">Posso beber álcool durante o tratamento?</div>
       <div class="faq-a">O álcool não é formalmente contraindicado, mas pode piorar os efeitos gastrointestinais e adicionar calorias vazias à dieta. Se consumir, faça com muita moderação.</div>
     </div>
+  </div>
+
+  <!-- PAGE 41: Cap 19 — FAQ Parte 2 -->
+  <div class="page" data-page="41" data-title="Cap. 19 — Perguntas Frequentes (2/2)">
+    <span class="read-badge">✓ Lida</span>
+    <div class="chapter-number-display">19</div>
+    <div class="page-eyebrow">Capítulo 19 — continuação</div>
+    <div class="title-rule" style="margin-top:16px;"></div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">O que fazer se esquecer de aplicar a dose?</div>
       <div class="faq-a">Se lembrar até 4 dias após o dia habitual, aplique assim que possível. Se passarem mais de 4 dias, pule essa dose e retome na semana seguinte. Nunca aplique duas doses na mesma semana.</div>
@@ -1252,8 +1380,8 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
     </div>
   </div>
 
-  <!-- PAGE 23: Resumo -->
-  <div class="page" data-page="23" data-title="Resumo Personalizado">
+  <!-- PAGE 42: Resumo Personalizado -->
+  <div class="page" data-page="42" data-title="Resumo Personalizado">
     <span class="read-badge">✓ Lida</span>
     <div class="page-eyebrow">Conclusão</div>
     <h1 class="page-title">Seu Resumo Personalizado</h1>
@@ -1280,7 +1408,7 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
   <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Anterior</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
     <button id="btn-home" class="nav-btn" onclick="goToPage(1)">↩ Início</button>
-    <div id="page-info">Página 1 de 15</div>
+    <div id="page-info">Página 1 de 42</div>
   </div>
   <button class="nav-btn" id="btn-next" onclick="navigate(1)">Próxima →</button>
 </div>
@@ -1289,7 +1417,7 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
 </div>
 
 <script>
-const TOTAL = 23;
+const TOTAL = 42;
 const LS_PAGE  = 'ebookPM_pagina';
 const LS_LIDAS = 'ebookPM_lidas';
 const LS_FONT  = 'ebookPM_fontSize';
@@ -1297,16 +1425,26 @@ const LS_RESP  = 'ebookPM_respostas';
 
 const TITLES = [
   'Capa','Sobre este Ebook','Introdução',
-  'Cap. 1 — O Que É o Mounjaro','Cap. 2 — Os Primeiros Dias',
-  'Cap. 3 — Alimentação','Cap. 4 — Hidratação e Suplementação',
-  'Cap. 5 — Efeitos Colaterais ★','Cap. 6 — Exercícios Físicos',
-  'Cap. 7 — Saúde Mental','Cap. 8 — Resultados ★',
-  'Cap. 9 — Dicas para Potencializar','Cap. 10 — Manutenção',
-  'Cap. 11 — A Saúde da Pele','Cap. 12 — Receitas Práticas',
-  'Cap. 13 — Eventos Sociais','Cap. 14 — Quebrando o Platô',
-  'Cap. 15 — Sono e Hormônios','Cap. 16 — Relacionamentos',
-  'Cap. 17 — Mulheres e o Mounjaro','Cap. 18 — Custos e Logística',
-  'Cap. 19 — Perguntas Frequentes','Resumo Personalizado'
+  'Cap. 1 — O Que É o Mounjaro','Cap. 1 — Efeitos do Mounjaro',
+  'Cap. 2 — Os Primeiros Dias','Cap. 2 — Estratégias Iniciais',
+  'Cap. 3 — Alimentação: Proteínas','Cap. 3 — Alimentos a Evitar',
+  'Cap. 4 — Hidratação','Cap. 4 — Suplementação',
+  'Cap. 5 — Efeitos Colaterais','Cap. 5 — Questionário ★',
+  'Cap. 6 — Exercícios Físicos','Cap. 6 — Qual Exercício Escolher',
+  'Cap. 7 — Saúde Mental','Cap. 7 — Autoestima',
+  'Cap. 8 — Linha do Tempo','Cap. 8 — Questionário ★',
+  'Cap. 9 — Dicas para Potencializar','Cap. 9 — Progresso e Conquistas',
+  'Cap. 10 — Manutenção','Cap. 10 — Pilares da Manutenção',
+  'Cap. 11 — A Saúde da Pele','Cap. 11 — O Que Realmente Ajuda',
+  'Cap. 12 — Receitas Práticas','Cap. 12 — Snacks e Dicas',
+  'Cap. 13 — Eventos Sociais','Cap. 13 — Festas e Viagens',
+  'Cap. 14 — Quebrando o Platô','Cap. 14 — Estratégias Anti-Platô',
+  'Cap. 15 — Sono e Hormônios','Cap. 15 — Cortisol e Regulação',
+  'Cap. 16 — Relacionamentos','Cap. 16 — A Nova Relação com Você',
+  'Cap. 17 — Mulheres e o Mounjaro','Cap. 17 — SOP e Menopausa',
+  'Cap. 18 — Custos do Tratamento','Cap. 18 — Logística e Continuidade',
+  'Cap. 19 — Perguntas Frequentes (1/2)','Cap. 19 — Perguntas Frequentes (2/2)',
+  'Resumo Personalizado'
 ];
 
 let current = 1;
