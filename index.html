@@ -1335,10 +1335,10 @@ function initFlipBook() {
 
   /* No mobile: 1 página ocupando quase toda a tela */
   const W = isMobile
-    ? Math.floor(vw * 0.94)
+    ? Math.floor(vw * 0.96)
     : Math.min(460, Math.floor(vw * 0.46));
   const H = isMobile
-    ? Math.floor(vh * 0.72)
+    ? Math.floor(vh * 0.82)
     : Math.min(740, Math.max(460, Math.floor(vh * 0.78)));
 
   pageFlip = new St.PageFlip(container, {
@@ -1346,16 +1346,16 @@ function initFlipBook() {
     height:              H,
     size:                'stretch',
     minWidth:            isMobile ? 280 : 240,
-    maxWidth:            isMobile ? 420 : 520,
-    minHeight:           isMobile ? 340 : 380,
-    maxHeight:           isMobile ? 680 : 820,
+    maxWidth:            isMobile ? 430 : 520,
+    minHeight:           isMobile ? 480 : 380,
+    maxHeight:           isMobile ? 780 : 820,
     maxShadowOpacity:    0.5,
     showCover:           true,
-    mobileScrollSupport: false,   /* false evita conflito swipe/scroll */
+    mobileScrollSupport: true,    /* scroll dentro da página habilitado */
     useMouseEvents:      true,
-    swipeDistance:       isMobile ? 40 : 25,
+    swipeDistance:       80,      /* exige arrasto maior para não conflitar com scroll */
     clickEventForward:   false,
-    flippingTime:        isMobile ? 500 : 680
+    flippingTime:        isMobile ? 450 : 680
   });
 
   pageFlip.loadFromHTML(document.querySelectorAll('.page'));
