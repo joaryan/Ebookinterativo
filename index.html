@@ -538,8 +538,15 @@ ul.content-list li, ol.content-list li { line-height: 1.8; margin-bottom: 0.4em;
 .mark-read-btn:hover { background: #e8f5e0; }
 .mark-read-btn.done { background: #e8f5e0; }
 
-/* Prevent interaction during flip */
-#book-container.flipping { pointer-events: none; }
+/* ── Mobile ── */
+@media (max-width: 639px) {
+  #book-wrap { padding: 10px 8px 0; }
+  #nav-wrap  { padding: 0 8px; margin-top: 10px; }
+  .nav-btn   { padding: 9px 14px; font-size: 0.8rem; }
+  .cover-inner { padding: 40px 24px; }
+  .cover-title { font-size: 1.7rem; }
+  .cover-subtitle { font-size: 0.9rem; }
+}
 
 /* Flash de zona ao clicar na folha */
 @keyframes zoneFlash {
@@ -1324,24 +1331,31 @@ function initFlipBook() {
   const container = document.getElementById('book-container');
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  const W  = Math.min(460, Math.floor(vw * 0.46));
-  const H  = Math.min(740, Math.max(460, Math.floor(vh * 0.78)));
+  const isMobile = vw < 640;
+
+  /* No mobile: 1 página ocupando quase toda a tela */
+  const W = isMobile
+    ? Math.floor(vw * 0.94)
+    : Math.min(460, Math.floor(vw * 0.46));
+  const H = isMobile
+    ? Math.floor(vh * 0.72)
+    : Math.min(740, Math.max(460, Math.floor(vh * 0.78)));
 
   pageFlip = new St.PageFlip(container, {
     width:               W,
     height:              H,
     size:                'stretch',
-    minWidth:            240,
-    maxWidth:            520,
-    minHeight:           380,
-    maxHeight:           820,
-    maxShadowOpacity:    0.65,
+    minWidth:            isMobile ? 280 : 240,
+    maxWidth:            isMobile ? 420 : 520,
+    minHeight:           isMobile ? 340 : 380,
+    maxHeight:           isMobile ? 680 : 820,
+    maxShadowOpacity:    0.5,
     showCover:           true,
-    mobileScrollSupport: true,
+    mobileScrollSupport: false,   /* false evita conflito swipe/scroll */
     useMouseEvents:      true,
-    swipeDistance:       25,
+    swipeDistance:       isMobile ? 40 : 25,
     clickEventForward:   false,
-    flippingTime:        680
+    flippingTime:        isMobile ? 500 : 680
   });
 
   pageFlip.loadFromHTML(document.querySelectorAll('.page'));
